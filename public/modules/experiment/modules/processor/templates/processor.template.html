@@ -1,0 +1,33 @@
+<div
+    data-ng-controller="Processor as processor"
+    >
+    <h2>Processor</h2>
+    <hr>
+    <button
+        class="
+            btn
+            btn-default
+        "
+        data-ng-click="processor.processData()"
+        type="button"
+        >
+        Process Data
+    </button>
+    <br>
+    <br>
+    <div
+        data-ng-if="processor.metadata.analysis['step 1'].done"
+        data-pcr-analysis-step1
+        >
+    </div>
+    <div
+        data-ng-if="processor.metadata.analysis['step 2'].done"
+        data-pcr-analysis-step2
+        >
+    </div>
+    <div
+        data-ng-if="processor.metadata.analysis['step 3'].done"
+        data-pcr-analysis-step3
+        >
+    </div>
+</div>

@@ -1,0 +1,24 @@
+{
+  "name": "RT-Analyzer-Prototype-Mark-II",
+  "version": "0.4.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/slacktracer/RT-Analyzer-Prototype-Mark-II.git"
+  },
+  "author": "Thiago F",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/slacktracer/RT-Analyzer-Prototype-Mark-II/issues"
+  },
+  "homepage": "https://github.com/slacktracer/RT-Analyzer-Prototype-Mark-II",
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-eslint": "^0.12.0",
+    "gulp-jscs": "^1.6.0"
+  }
+}

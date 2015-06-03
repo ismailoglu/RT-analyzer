@@ -1,0 +1,52 @@
+<h3>Step 2</h3>
+<hr>
+<div
+    class="
+        table-responsive
+    "
+    >
+    <table
+        class="
+            table
+            table-bordered
+        "
+        >
+        <caption>Relative Expression Value by Probe for each Sample</caption>
+        <thead>
+            <tr>
+                <th>Sample</th>
+                <th
+                    colspan="{{processor.metadata.analysis['step 2'].formatted.headers.length}}"
+                    >
+                    Relative Expression Value by Probe
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                </th>
+                <th
+                    data-ng-repeat="header in processor.metadata.analysis['step 2'].formatted.headers"
+                    scope="column"
+                    >
+                    {{header}}
+                </th>
+            </tr>
+            <tr
+                data-ng-repeat="row in processor.metadata.analysis['step 2'].formatted.rows"
+                >
+                <th
+                    scope="row"
+                    >
+                    {{row.sampleName}}
+                </th>
+                <td
+                    data-ng-repeat="value in row"
+                    >
+                    {{value}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

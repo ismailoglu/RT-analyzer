@@ -1,0 +1,39 @@
+.allocator .row {
+    text-align: center;
+}
+.allocator .row .item {
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 4px;
+    margin-left: .69%;
+    min-height: 30px;
+    min-width: 30px;
+    vertical-align: middle;
+    width: 6%;
+}
+.allocator .row .position {
+    border: 1px solid #aaa;
+}
+.allocator .row .first {
+    margin-left: 0%;
+}
+.allocator .row .id {
+    background-color: #eeeeee;
+    line-height: 30px;
+}
+.allocator .row .corner {
+    background: transparent;
+    cursor: default;
+}
+.allocator .variable {
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+.allocator .colour {
+    border-left: 30px solid #ececec;
+    border-right: 30px solid #ececec;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 120px;
+}

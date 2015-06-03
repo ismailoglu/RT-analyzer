@@ -1,0 +1,36 @@
+<h3>Step 1</h3>
+<hr>
+<div
+    data-ng-repeat="(sample, probes) in processor.data.analysis['step 1']"
+    >
+    <div
+        class="
+            table-responsive
+        "
+        >
+        <table
+            class="
+                table
+                table-bordered
+            "
+            >
+            <caption>{{sample}}</caption>
+            <thead>
+                <tr>
+                    <th>Probe</th>
+                    <th>Cycles</th>
+                    <th>Average</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    data-ng-repeat="(probe, data) in probes"
+                    >
+                    <td>{{probe}}</td>
+                    <td>{{processor.intoCSVList(data.cycles)}}</td>
+                    <td>{{data.average}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

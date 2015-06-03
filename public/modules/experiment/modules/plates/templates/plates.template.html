@@ -1,0 +1,83 @@
+<div
+    data-ng-controller="Plates as plates"
+    >
+    <h2>Plates</h2>
+    <hr>
+    <div
+        class="
+            plate
+        "
+        data-ng-init="plateIndex = $index"
+        data-ng-repeat="plate in plates.data.plates"
+        >
+        <h3>
+            Plate {{$index + 1}}
+        </h3>
+        <br>
+        <div
+            data-pcr-reader
+            >
+        </div>
+        <br>
+        <br>
+        <div
+            class="
+                row
+            "
+            >
+            <div
+                class="
+                    col-md-6
+                "
+                data-pcr-allocator
+                data-plate-index="plateIndex"
+                data-type="'sample'"
+                >
+            </div>
+            <div
+                class="
+                    col-md-6
+                "
+                data-pcr-allocator
+                data-plate-index="plateIndex"
+                data-type="'probe'"
+                >
+            </div>
+        </div>
+        <br>
+        <br>
+        <div
+            class="checkbox"
+            >
+            <label>
+                <input
+                    data-ng-model="plates.data.plates[$index].showConfiguration"
+                    type="checkbox"
+                    >
+                    Edit Cycle Values
+            </label>
+        </div>
+        <br>
+        <div
+            data-ng-if="plates.data.plates[$index].showConfiguration"
+            data-pcr-plate
+            >
+        </div>
+        <br>
+    </div>
+    <button
+        class="
+            btn
+            btn-default
+        "
+        data-ng-click="plates.addPlate()"
+        type="button"
+        >
+        Add Plate {{plates.data.plates.length + 1}}
+    </button>
+</div>
+<link
+    href="modules/experiment/modules/plates/styles/plates.css"
+    rel="stylesheet"
+    >
+<br>

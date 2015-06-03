@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "angular": false,
+        "Papa": false,
+        "Please": false,
+        "ss": false
+    },
+    "rules": {
+        "no-var": 0,
+        "quotes": [2, "single"],
+        "one-var": [2, {
+            "const": "never",
+            "let": "never",
+            "var": "always"
+        }],
+        "sort-vars": 2,
+        "vars-on-top": 2
+    }
+}

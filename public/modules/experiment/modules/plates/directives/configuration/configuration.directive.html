@@ -1,0 +1,134 @@
+<h4>Configuration</h4>
+<hr>
+<form
+    >
+    <div
+        class="
+            row
+        "
+        data-ng-init="plateNumber = $index + 1"
+        data-ng-repeat="position in plate.positions"
+        >
+        <div
+            class="
+                col-md-12
+            "
+            >
+            <div
+                class="
+                    row
+                "
+                >
+                <div
+                    class="
+                        col-md-2
+                        form-group
+                        "
+                    >
+                    <label
+                        class="
+                            sr-only
+                        "
+                        for="position[{{plateNumber + position}}]"
+                        >
+                        Position
+                    </label>
+                    <input
+                        class="
+                            form-control
+                        "
+                        disabled
+                        id="position[{{plateNumber + position}}]"
+                        type="text"
+                        value="{{position}}"
+                        >
+                </div>
+                <div
+                    class="
+                        col-md-4
+                        form-group
+                    "
+                    >
+                    <label
+                        class="
+                            sr-only
+                        "
+                        for="sample[{{plateNumber + position}}]"
+                        >
+                        Sample
+                    </label>
+                    <select
+                        class="
+                            form-control
+                        "
+                        data-ng-model="plate[position].sample"
+                        data-ng-options="sample for sample in plates.data.samples"
+                        id="sample[{{plateNumber + position}}]"
+                        required
+                        >
+                        <option
+                            value=""
+                            >
+                            Choose Sample
+                        </option>
+                    </select>
+                </div>
+                <div
+                    class="
+                        col-md-4
+                        form-group
+                    "
+                    >
+                    <label
+                        class="
+                            sr-only
+                        "
+                        for="probe[{{plateNumber + position}}]"
+                        >
+                        Probe
+                    </label>
+                    <select
+                        class="
+                            form-control
+                        "
+                        data-ng-model="plate[position].probe"
+                        data-ng-options="probe for probe in plates.data.probes"
+                        id="probe[{{plateNumber + position}}]"
+                        required
+                        >
+                        <option
+                            value=""
+                            >
+                            Choose Probe
+                        </option>
+                    </select>
+                </div>
+                <div
+                    class="
+                        col-md-2
+                        form-group
+                    "
+                    >
+                    <label
+                        class="
+                            sr-only
+                        "
+                        for="cycle[{{plateNumber + position}}]"
+                        >
+                        Cycle
+                    </label>
+                    <input
+                        class="
+                            form-control
+                        "
+                        data-ng-model="plate[position].cycle"
+                        id="cycle[{{plateNumber + position}}]"
+                        placeholder="Cycle"
+                        required
+                        type="text"
+                        >
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,95 @@
+<h4>{{allocator.variableTypeAsSingularNoun}} Allocator</h4>
+<hr>
+<div
+    class="
+        allocator
+    "
+    >
+    <div
+        class="
+            row
+        "
+        >
+        <div
+            class="
+                corner
+                first
+                id
+                item
+            "
+            tabindex="0"
+            >
+        </div><!--
+        --><div
+            class="
+                id
+                item
+            "
+            data-ng-repeat="column in allocator.data.plates[allocator.plateIndex].columns"
+            tabindex="0"
+            >
+            {{column}}
+        </div>
+    </div>
+    <div
+        class="
+            row
+        "
+        data-ng-repeat="row in allocator.data.plates[allocator.plateIndex].rows"
+        >
+        <div
+            class="
+                first
+                id
+                item
+            "
+            tabindex="0"
+            >
+            {{row}}
+        </div><!--
+        --><div
+                class="
+                    item
+                    position
+                "
+                data-ng-repeat="column in allocator.data.plates[allocator.plateIndex].columns"
+                data-ng-style="{
+                    'background-color': allocator.style.backgroundColor(allocator.variableTypeAsPropertyName, allocator.plateIndex, row + column)
+                }"
+                tabindex="0"
+                >
+        </div>
+    </div>
+    <div
+        data-ng-if="allocator.data[allocator.variableTypeAsPropertyName].length > 0"
+        >
+        <br>
+        <ul
+            class="
+                list-unstyled
+            "
+            >
+            <li
+                class="
+                    variable
+                "
+                data-ng-repeat="variable in allocator.data[allocator.variableTypeAsPropertyName]"
+                >
+                <span
+                    class="
+                        colour
+                    "
+                    style="
+                        background-color: {{allocator.metadata[allocator.variableTypeAsPropertyName].colours[$index]}}
+                    "
+                    >
+                </span>
+                {{variable}}
+            </li>
+        </ul>
+    </div>
+</div>
+<link
+    href="modules/experiment/modules/plates/directives/allocator/allocator.directive.css"
+    rel="stylesheet"
+    >

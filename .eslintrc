@@ -1,0 +1,37 @@
+{
+    "ecmaFeatures": {
+        "blockBindings": true,
+        "generators": true,
+        "templateStrings": true
+    },
+    "env": {
+        "node": true
+    },
+    "rules": {
+        "generator-star": 2,
+        "new-cap": [
+            2,
+            {
+                "capIsNewExceptions": [
+                    "Router"
+                ]
+            }
+        ],
+        "no-var": 2,
+        "no-unused-vars": [
+            1,
+            {
+                "vars": "all",
+                "args": "none"
+            }
+        ],
+        "no-use-before-define": [2, "nofunc"],
+        "one-var": [2, {
+            "const": "never",
+            "let": "never",
+            "var": "always"
+        }],
+        "quotes": [2, "single"],
+        "wrap-iife": [2, "outside"]
+    }
+}

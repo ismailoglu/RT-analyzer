@@ -1,0 +1,145 @@
+<h2>{{variables.variableTypeAsPluralNoun}}</h2>
+<hr>
+<div
+    class="
+        variables
+    "
+    >
+    <form
+        data-ng-submit="variables.add(variables.new)"
+        >
+        <div
+            class="
+                form-group
+            "
+            >
+            <div
+                class="
+                    input-group
+                "
+                >
+                <label
+                    class="
+                        sr-only
+                    "
+                    for="new{{variables.variableTypeAsSingularNoun}}"
+                    >
+                    Add {{variables.variableTypeAsSingularNoun}}
+                </label>
+                <input
+                    class="
+                        form-control
+                    "
+                    data-ng-model="variables.new"
+                    id="new{{variables.variableTypeAsSingularNoun}}"
+                    placeholder="{{variables.variableTypeAsSingularNoun}} Name"
+                    type="text"
+                    >
+                <span
+                    class="
+                        input-group-btn
+                    "
+                    >
+                    <button
+                        class="
+                            btn
+                            btn-default
+                        "
+                        type="submit"
+                        >
+                        Add {{variables.variableTypeAsSingularNoun}}
+                    </button>
+                </span>
+            </div>
+        </div>
+    </form>
+    <div
+        data-ng-if="variables.data[variables.variableTypeAsPropertyName].length > 0"
+        >
+        <br>
+        <ol>
+            <li
+                class="
+                    variable
+                "
+                data-ng-click="variables.change($index)"
+                data-ng-repeat="variable in variables.data[variables.variableTypeAsPropertyName]"
+                >
+                <span
+                    class="
+                        colour
+                    "
+                    style="
+                        background-color: {{variables.metadata[variables.variableTypeAsPropertyName].colours[$index]}}
+                    "
+                    >
+                </span>
+                {{variable}}
+                <button
+                    class="
+                        close
+                    "
+                    data-ng-click="variables.remove($index)"
+                    type="button"
+                    >
+                    <span>
+                        &times;
+                    </span>
+                    <span
+                        class="
+                            sr-only
+                        "
+                        >
+                        Close
+                    </span>
+                </button>
+            </li>
+        </ol>
+        <br>
+        <form>
+            <div
+                class="
+                    form-group
+                "
+                >
+                <label
+                    for="control{{variables.variableTypeAsSingularNoun}}"
+                    >
+                    Control {{variables.variableTypeAsSingularNoun}}
+                </label>
+                <select
+                    class="
+                        form-control
+                    "
+                    data-ng-model="variables.data[variables.metadata[variables.variableTypeAsPropertyName].controlVariablePropertyName]"
+                    data-ng-options="variable for variable in variables.data[variables.variableTypeAsPropertyName]"
+                    id="control{{variables.variableTypeAsSingularNoun}}"
+                    >
+                    <option
+                        value=""
+                        >
+                        Choose a Control {{variables.variableTypeAsSingularNoun}}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div
+        data-ng-if="variables.data[variables.variableTypeAsPropertyName].length > 1"
+        >
+        <br>
+        <div
+            class="
+                well
+                well-lg
+            "
+            data-ng-if="variables.type === 'sample'"
+            data-pcr-biological-replicates-groups
+            >
+        </div>
+    </div>
+</div>
+<link
+    href="modules/experiment/directives/variables/variables.directive.css"
+    rel="stylesheet"
+    >

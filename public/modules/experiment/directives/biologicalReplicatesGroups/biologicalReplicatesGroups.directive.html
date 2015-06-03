@@ -1,0 +1,95 @@
+<h3>Biological Replicates Groups</h3>
+<hr>
+<form
+    data-ng-submit="biologicalReplicatesGroups.add(biologicalReplicatesGroups.new)"
+    >
+    <div
+        class="
+            form-group
+        "
+        >
+        <label
+            for="newBiologicalReplicatesGroup"
+            >
+            Biological Replicates Group Name
+        </label>
+        <input
+            class="
+                form-control
+            "
+            data-ng-model="biologicalReplicatesGroups.new"
+            id="newBiologicalReplicatesGroup"
+            placeholder="Biological Replicates Group Name"
+            type="text"
+            >
+    </div>
+    <div
+        class="
+            form-group
+        "
+        >
+        <label
+            class="
+                control-label
+            "
+            >
+            Samples
+        </label>
+        <div
+            class="checkbox"
+            data-ng-repeat="(sampleName, sampleMetadata) in biologicalReplicatesGroups.metadata.biologicalReplicatesGroups.samples"
+            >
+            <label>
+                <input
+                    data-ng-disabled="sampleMetadata.used"
+                    data-ng-model="sampleMetadata.selected"
+                    type="checkbox"
+                    value="{{sampleName}}"
+                    >
+                    {{sampleName}}
+            </label>
+        </div>
+    </div>
+    <button
+        class="
+            btn
+            btn-default
+        "
+        type="submit"
+        >
+        Add Biological Replicate Group
+    </button>
+</form>
+<br>
+<ol>
+    <li
+        data-ng-repeat="(biologicalReplicatesGroupName, biologicalReplicatesGroup) in biologicalReplicatesGroups.data.biologicalReplicatesGroups"
+        >
+        <button
+            class="
+                close
+            "
+            data-ng-click="biologicalReplicatesGroups.remove(biologicalReplicatesGroupName)"
+            type="button"
+            >
+            <span>
+                &times;
+            </span>
+            <span
+                class="
+                    sr-only
+                "
+                >
+                Close
+            </span>
+        </button>
+        <b>{{biologicalReplicatesGroupName}}</b>
+        <ol>
+            <li
+                data-ng-repeat="biologicalReplicate in biologicalReplicatesGroup"
+                >
+                {{biologicalReplicate}}
+            </li>
+        </ol>
+    </li>
+</ol>
