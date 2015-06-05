@@ -1,3 +1,17 @@
+### June 2015 News
+
+We're a living a transition phase over here. While we do some clean up and organize some stuff please take a look at our proof-of-concept demo and a demo for the alpha we're developing right now:
+
+[mullis - a proof-of-concept for the RT-Analyzer](http://anzol.biz/mullis)
+[RT-Analyzer Alpha 1](http://anzol.biz/rt-analyzer-alpha-1.0/)
+
+Here is some sample data to try: [Sample Set 1](http://anzol.biz/rt-analyzer-alpha-1.0/data/RT-Analyzer_-_Sample_set_1.csv) and [Sample Set 2](http://anzol.biz/rt-analyzer-alpha-1.0/data/RT-Analyzer_-_Sample_set_2.csv).
+
+If you have any questions, comments, suggestions please open an issue!
+
+If you're not sure what it's all about yet, please read on!
+
+
 RT-analyzer
 ===========
 
@@ -5,7 +19,7 @@ An app to analyze real-time PCR data
 
 ## Background
 
-RT-PCR or [quantitative real-time PCR](http://en.wikipedia.org/wiki/Real-time_polymerase_chain_reaction) is a technique that is used to analyze expression level of a specific RNA molecule in a sample. I won't go into much detail, but a PCR (polymerase chain reaction) is performed and the amound of DNA is measured at every cycle. Multiple reactions are run in parallel in order to test multiple samples (e.g. control vs treatment) and different genes in those samples. The difference between cycle numbers where a reaction passes a set threshold DNA amount, shows the difference between expression levels of two genes. 
+RT-PCR or [quantitative real-time PCR](http://en.wikipedia.org/wiki/Real-time_polymerase_chain_reaction) is a technique that is used to analyze expression level of a specific RNA molecule in a sample. I won't go into much detail, but a PCR (polymerase chain reaction) is performed and the amound of DNA is measured at every cycle. Multiple reactions are run in parallel in order to test multiple samples (e.g. control vs treatment) and different genes in those samples. The difference between cycle numbers where a reaction passes a set threshold DNA amount, shows the difference between expression levels of two genes.
 
 ### What is used now and why we need this
 
@@ -27,7 +41,7 @@ If the Sample and Gene are the same for two reactions these are repeat reactions
 
 At the end, we will come to a list of averages and stdevs for each "Sample"-"Gene" pair. This should be outputted either as a table or csv, so that the user can take their data back to Excel if they wish to.
 
-The main output will be in the form of graphs. The user should be given a choice of graph types (bar, line etc.). The graph should be redrawn as the user chooses a different type. The user should be able to choose what type of error bars they want and these should be introduced automatically. The user should be able to change some parameters of the graph (colors, bar width etc.) for visual appeal. At the end the user should be able to save their graphs as an image at different resolutions for presentation or publication purposes. 
+The main output will be in the form of graphs. The user should be given a choice of graph types (bar, line etc.). The graph should be redrawn as the user chooses a different type. The user should be able to choose what type of error bars they want and these should be introduced automatically. The user should be able to change some parameters of the graph (colors, bar width etc.) for visual appeal. At the end the user should be able to save their graphs as an image at different resolutions for presentation or publication purposes.
 
 ## Conclusion
 All in all this is a simple program that would save a lot of time and help us create beautiful graphs. As it is our motto, the program should be easy to use and provide the same experience on different platforms from Macbook Pro to Chromebook.
