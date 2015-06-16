@@ -25,6 +25,7 @@
                 id
                 item
             "
+            data-ng-click="allocator.selectColumn(column, allocator.plateIndex)"
             data-ng-repeat="column in allocator.data.plates[allocator.plateIndex].columns"
             tabindex="0"
             >
@@ -43,6 +44,7 @@
                 id
                 item
             "
+            data-ng-click="allocator.selectRow(row, allocator.plateIndex)"
             tabindex="0"
             >
             {{row}}
@@ -52,6 +54,11 @@
                     item
                     position
                 "
+                data-ng-class="{
+                    filled: allocator.isFilled(allocator.variableTypeAsPropertyName, allocator.plateIndex, row + column),
+                    selected: allocator.isSelected(row + column)
+                }"
+                data-ng-click="allocator.selectPosition(row + column, allocator.plateIndex)"
                 data-ng-repeat="column in allocator.data.plates[allocator.plateIndex].columns"
                 data-ng-style="{
                     'background-color': allocator.style.backgroundColor(allocator.variableTypeAsPropertyName, allocator.plateIndex, row + column)
@@ -73,7 +80,9 @@
                 class="
                     variable
                 "
+                data-ng-click="allocator.set(allocator.variableTypeAsPropertyName, allocator.plateIndex, variable)"
                 data-ng-repeat="variable in allocator.data[allocator.variableTypeAsPropertyName]"
+                tabindex="0"
                 >
                 <span
                     class="
@@ -87,6 +96,18 @@
                 {{variable}}
             </li>
         </ul>
+        <button
+            class="
+                btn
+                btn-block
+                btn-default
+                btn-xs
+            "
+            data-ng-click="allocator.set(allocator.variableTypeAsPropertyName, allocator.plateIndex, '')"
+            type="button"
+            >
+            Clear selected positions
+        </button>
     </div>
 </div>
 <link

@@ -2,17 +2,30 @@
     text-align: center;
 }
 .allocator .row .item {
+    border: 1px solid #eeeeee;
     cursor: pointer;
     display: inline-block;
     margin-bottom: 4px;
     margin-left: .69%;
     min-height: 30px;
     min-width: 30px;
+    transition: border 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s, color 0.15s ease-in-out 0s;
     vertical-align: middle;
     width: 6%;
 }
+.allocator .row .item:focus {
+    color: #66afe9;
+    border: 1px solid #66afe9;
+    outline: 0 none;
+}
 .allocator .row .position {
-    border: 1px solid #aaa;
+    border: 1px solid #aaaaaa;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+.allocator .row .position:focus {
+    border-color: #66afe9;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: 0 none;
 }
 .allocator .row .first {
     margin-left: 0%;
@@ -36,4 +49,12 @@
     height: 10px;
     margin-right: 5px;
     width: 120px;
+}
+.allocator .selected::after {
+    color: #aaaaaa;
+    content: '\00d7';
+}
+.allocator .filled.selected::after {
+    color: #ffffff;
+    content: '\00d7';
 }
