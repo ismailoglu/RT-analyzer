@@ -34,7 +34,7 @@
                 </th>
             </tr>
             <tr
-                data-ng-repeat="row in processor.metadata.analysis['step 3'].formatted.rows"
+                data-ng-repeat="row in processor.metadata.analysis['step 3'].formatted.rows track by $index"
                 >
                 <th
                     scope="row"
@@ -42,7 +42,7 @@
                     {{row.sampleName}}
                 </th>
                 <td
-                    data-ng-repeat="value in row"
+                    data-ng-repeat="value in row track by $index"
                     >
                     {{value}}
                 </td>
@@ -84,7 +84,7 @@
                 </th>
             </tr>
             <tr
-                data-ng-repeat="row in processor.metadata.analysis['step 3'].formattedStandardDeviation.rows"
+                data-ng-repeat="row in processor.metadata.analysis['step 3'].formattedStandardDeviation.rows track by $index"
                 >
                 <th
                     scope="row"
@@ -134,7 +134,7 @@
                 </th>
             </tr>
             <tr
-                data-ng-repeat="row in processor.metadata.analysis['step 3'].formattedStandardError.rows"
+                data-ng-repeat="row in processor.metadata.analysis['step 3'].formattedStandardError.rows track by $index"
                 >
                 <th
                     scope="row"

@@ -31,10 +31,19 @@
             vm.variableTypeAsPropertyName = variableTypes[vm.type].asPropertyName;
             vm.add = experiment.metadata[vm.variableTypeAsPropertyName].add;
             vm.change = experiment.metadata[vm.variableTypeAsPropertyName].change;
+            vm.onControlVariableChange = onControlVariableChange;
             vm.metadata = experiment.metadata;
             vm.remove = experiment.metadata[vm.variableTypeAsPropertyName].remove;
             vm.variableTypeAsPluralNoun = variableTypes[vm.type].asPluralNoun;
             vm.variableTypeAsSingularNoun = variableTypes[vm.type].asSingularNoun;
+            //
+            // functions
+            //
+            function onControlVariableChange() {
+                if (vm.type === 'sample') {
+                    experiment.metadata.helpers.coerceModel('controlSample');
+                }
+            }
         }
     }
 }());

@@ -26,6 +26,17 @@
             vm.data = experiment.data;
             vm.metadata = experiment.metadata;
             vm.remove = experiment.metadata.biologicalReplicatesGroups.remove;
+            vm.onControlBiologicalReplicatesGroupChange = onControlBiologicalReplicatesGroupChange;
+            vm.showChooseControlBiologicalReplicatesGroup = showChooseControlBiologicalReplicatesGroup;
+            //
+            // functions
+            //
+            function onControlBiologicalReplicatesGroupChange() {
+                experiment.metadata.helpers.coerceModel('controlBiologicalReplicatesGroup');
+            }
+            function showChooseControlBiologicalReplicatesGroup() {
+                return Object.keys(experiment.data.biologicalReplicatesGroups).length > 0;
+            }
         }
     }
 }());

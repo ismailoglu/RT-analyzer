@@ -22,6 +22,7 @@
                 biologicalReplicatesGroups: {},
                 controlProbe: '',
                 controlSample: '',
+                controlBiologicalReplicatesGroup: '',
                 plates: [],
                 probes: [],
                 samples: []
@@ -45,6 +46,9 @@
                     add: addBiologicalReplicatesGroup,
                     samples: {},
                     remove: removeBiologicalReplicatesGroup
+                },
+                helpers: {
+                    coerceModel: coerceModel
                 },
                 probes: {
                     add: makeAddVariableFunction('probes'),
@@ -88,6 +92,20 @@
                         service.data.biologicalReplicatesGroups[name] = samples;
                     }
                 });
+            }
+        }
+        function coerceModel(from) {
+            if (from === 'controlBiologicalReplicatesGroup') {
+                if (service.data.controlBiologicalReplicatesGroup !== '') {
+                    service.data.controlSample = '';
+                }
+                return;
+            }
+            if (from === 'controlSample') {
+                if (service.data.controlSample !== '') {
+                    service.data.controlBiologicalReplicatesGroup = '';
+                }
+                return;
             }
         }
         function makeAddVariableFunction(variableType) {
@@ -140,6 +158,7 @@
             preparePlatesForSampleRemoval(sampleName);
         }
         function removeBiologicalReplicatesGroup(name) {
+            prepareControlBiologicalReplicatesGroupForBiologicalReplicatesGroupRemoval(name);
             service.data.biologicalReplicatesGroups[name].forEach(function forEach(sampleName) {
                 service.metadata.biologicalReplicatesGroups.samples[sampleName].selected = false;
                 service.metadata.biologicalReplicatesGroups.samples[sampleName].used = false;
@@ -168,6 +187,11 @@
         function prepareControlSampleForSampleRemoval(sampleName) {
             if (service.data.controlSample === sampleName) {
                 service.data.controlSample = '';
+            }
+        }
+        function prepareControlBiologicalReplicatesGroupForBiologicalReplicatesGroupRemoval(biologicalReplicatesGroupName) {
+            if (service.data.controlBiologicalReplicatesGroup === biologicalReplicatesGroupName) {
+                service.data.controlBiologicalReplicatesGroup = '';
             }
         }
         function preparePlatesForProbeRemoval(probeName) {

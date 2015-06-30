@@ -33,10 +33,11 @@
                 control-label
             "
             >
-            Samples
+            Available Samples
         </label>
         <div
             class="checkbox"
+            data-ng-if="!sampleMetadata.used"
             data-ng-repeat="(sampleName, sampleMetadata) in biologicalReplicatesGroups.metadata.biologicalReplicatesGroups.samples"
             >
             <label>
@@ -93,3 +94,37 @@
         </ol>
     </li>
 </ol>
+<div
+    data-ng-if="biologicalReplicatesGroups.showChooseControlBiologicalReplicatesGroup()"
+    >
+    <br>
+    <form>
+        <div
+            class="
+                form-group
+            "
+            >
+            <label
+                for="controlBiologicalReplicatesGroup"
+                >
+                Control Biological Replicates Group
+                {{biologicalReplicatesGroups.data.controlBiologicalReplicatesGroup}}
+            </label>
+            <select
+                class="
+                    form-control
+                "
+                data-ng-change="biologicalReplicatesGroups.onControlBiologicalReplicatesGroupChange()"
+                data-ng-model="biologicalReplicatesGroups.data.controlBiologicalReplicatesGroup"
+                data-ng-options="biologicalReplicatesGroupName as biologicalReplicatesGroupName for (biologicalReplicatesGroupName, biologicalReplicatesGroup) in biologicalReplicatesGroups.data.biologicalReplicatesGroups"
+                id="controlBiologicalReplicatesGroup"
+                >
+                <option
+                    value=""
+                    >
+                    Choose a Control Biological Replicates Group
+                </option>
+            </select>
+        </div>
+    </form>
+</div>

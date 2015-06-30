@@ -111,6 +111,7 @@
                     class="
                         form-control
                     "
+                    data-ng-change="variables.onControlVariableChange()"
                     data-ng-model="variables.data[variables.metadata[variables.variableTypeAsPropertyName].controlVariablePropertyName]"
                     data-ng-options="variable for variable in variables.data[variables.variableTypeAsPropertyName]"
                     id="control{{variables.variableTypeAsSingularNoun}}"

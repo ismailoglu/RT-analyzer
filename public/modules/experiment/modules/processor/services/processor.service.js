@@ -37,7 +37,15 @@
                 row = [];
                 row.sampleName = sampleName;
                 formatted.headers.forEach(function forEach(probeName) {
-                    row.push(experiment.data.analysis['step 2'][sampleName][probeName].relativeExpressionValue);
+                    if (
+                        experiment.data.analysis['step 2'][sampleName]
+                        &&
+                        experiment.data.analysis['step 2'][sampleName][probeName]
+                    ) {
+                        row.push(experiment.data.analysis['step 2'][sampleName][probeName].relativeExpressionValue);
+                    } else {
+                        row.push('n/a');
+                    }
                 });
                 formatted.rows.push(row);
             });
@@ -76,20 +84,44 @@
                 standardDeviationRow.sampleName = sampleName;
                 standardErrorRow.sampleName = sampleName;
                 formatted.headers.forEach(function forEach(probeName) {
-                    row.push(experiment.data.analysis['step 3'][sampleName][probeName].relativeExpressionValue);
+                    if (
+                        experiment.data.analysis['step 3'][sampleName]
+                        &&
+                        experiment.data.analysis['step 3'][sampleName][probeName]
+                    ) {
+                        row.push(experiment.data.analysis['step 3'][sampleName][probeName].relativeExpressionValue);
+                    } else {
+                        row.push('n/a');
+                    }
                 });
                 formattedStandardDeviation.headers.forEach(function forEach(probeName) {
-                    if (experiment.data.analysis['step 3'][sampleName][probeName].standardDeviation) {
-                        standardDeviationRow.push(experiment.data.analysis['step 3'][sampleName][probeName].standardDeviation);
+                    if (
+                        experiment.data.analysis['step 3'][sampleName]
+                        &&
+                        experiment.data.analysis['step 3'][sampleName][probeName]
+                    ) {
+                        if (experiment.data.analysis['step 3'][sampleName][probeName].standardDeviation) {
+                            standardDeviationRow.push(experiment.data.analysis['step 3'][sampleName][probeName].standardDeviation);
+                        } else {
+                            standardDeviationRow.push('n/a');
+                        }
                     } else {
-                        standardDeviationRow.push('');
+                        standardDeviationRow.push('n/a');
                     }
                 });
                 formattedStandardError.headers.forEach(function forEach(probeName) {
-                    if (experiment.data.analysis['step 3'][sampleName][probeName].standardError) {
-                        standardErrorRow.push(experiment.data.analysis['step 3'][sampleName][probeName].standardError);
+                    if (
+                        experiment.data.analysis['step 3'][sampleName]
+                        &&
+                        experiment.data.analysis['step 3'][sampleName][probeName]
+                    ) {
+                        if (experiment.data.analysis['step 3'][sampleName][probeName].standardError) {
+                            standardErrorRow.push(experiment.data.analysis['step 3'][sampleName][probeName].standardError);
+                        } else {
+                            standardErrorRow.push('n/a');
+                        }
                     } else {
-                        standardErrorRow.push('');
+                        standardErrorRow.push('n/a');
                     }
                 });
                 formatted.rows.push(row);
@@ -107,7 +139,16 @@
             }
             processStep1();
             processStep2();
-            processStep3();
+            if (Object.keys(experiment.data.biologicalReplicatesGroups).length) {
+                processStep3();
+            }
+            if (
+                experiment.data.controlBiologicalReplicatesGroup
+                ||
+                experiment.data.controlSample
+            ) {
+                processStep4();
+            }
         }
         function processStep1() {
             experiment.data.samples.forEach(function forEach(sample) {
@@ -205,6 +246,25 @@
             });
             formatStep3();
             experiment.metadata.analysis['step 3'].done = true;
+        }
+        function processStep4() {
+            var
+                control;
+            if (experiment.data.controlBiologicalReplicatesGroup) {
+                // control =
+            } else {
+                // control =
+            }
+            experiment.data.analysis['step 4'] = angular.copy(experiment.data.analysis['step 3']);
+            Object.keys(experiment.data.analysis['step 4']).forEach(function forEachProbe(probe) {
+                Object.keys(experiment.data.analysis['step 4']).forEach(function forEachValue(value) {
+                    // experiment.data.analysis['step 4'][probe][value] /= 1;
+                    // normalize by what...?
+                });
+            });
+            alert('Normalization not implemented yet!');
+            console.log(experiment.data.analysis);
+            console.log(JSON.stringify(experiment.data.analysis));
         }
     }
 }());
