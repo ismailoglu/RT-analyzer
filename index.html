@@ -1,117 +1,85 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>RT-Analyzer by ismailoglu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">RT-Analyzer</h1>
+      <h2 class="project-tagline">An app to analyze real-time PCR data</h2>
+      <a href="https://github.com/ismailoglu/RT-analyzer" class="btn">View on GitHub</a>
+      <a href="https://github.com/ismailoglu/RT-analyzer/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ismailoglu/RT-analyzer/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" href="stylesheets/github-dark.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
-
-  <title>RT-Analyzer</title>
-  <meta name="description" content="An app to analyze real-time PCR data">
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-</head>
-
-<body>
-
-  <div class="wrapper">
-    <header>
-      <h1 class="title">RT-Analyzer</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">An app to analyze real-time PCR data</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/ismailoglu/RT-analyzer/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/ismailoglu/RT-analyzer/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/ismailoglu/RT-analyzer" class="code">View RT-Analyzer on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h3>
-<a id="june-2015-news" class="anchor" href="#june-2015-news" aria-hidden="true"><span class="octicon octicon-link"></span></a>June 2015 News</h3>
-
-<p>We're a living a transition phase over here. While we do some clean up and organize some stuff please take a look at our proof-of-concept demo and a demo for the alpha we're developing right now:</p>
-
-<ul>
-<li><a href="http://anzol.biz/mullis">mullis - a proof-of-concept for the RT-Analyzer</a></li>
-<li><a href="http://anzol.biz/rt-analyzer-alpha-1.0/">RT-Analyzer Alpha 1</a></li>
-</ul>
-
-<p>Here is some sample data to try: <a href="http://anzol.biz/rt-analyzer-alpha-1.0/data/RT-Analyzer_-_Sample_set_1.csv">Sample Set 1</a> and <a href="http://anzol.biz/rt-analyzer-alpha-1.0/data/RT-Analyzer_-_Sample_set_2.csv">Sample Set 2</a>.</p>
-
-<p>If you have any questions, comments, suggestions please open an issue!</p>
-
-<p>If you're not sure what it's all about yet read on!</p>
-
-<h1>
+    <section class="main-content">
+      <h1>
 <a id="rt-analyzer" class="anchor" href="#rt-analyzer" aria-hidden="true"><span class="octicon octicon-link"></span></a>RT-analyzer</h1>
 
 <p>An app to analyze real-time PCR data</p>
 
+<p><a href="http://rtanalyzer.labratapps.com">Try RT-Analyzer now!</a>
+For feedback: <a href="mailto:rtanalyzer@gmail.com">rtanalyzer@gmail.com</a></p>
+
 <h2>
 <a id="background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h2>
 
-<p>RT-PCR or <a href="http://en.wikipedia.org/wiki/Real-time_polymerase_chain_reaction">quantitative real-time PCR</a> is a technique that is used to analyze expression level of a specific RNA molecule in a sample. I won't go into much detail, but a PCR (polymerase chain reaction) is performed and the amound of DNA is measured at every cycle. Multiple reactions are run in parallel in order to test multiple samples (e.g. control vs treatment) and different genes in those samples. The difference between cycle numbers where a reaction passes a set threshold DNA amount, shows the difference between expression levels of two genes.</p>
+<p>RT-PCR or <a href="http://en.wikipedia.org/wiki/Real-time_polymerase_chain_reaction">quantitative real-time PCR</a> is a technique that is used to analyze expression level of a specific RNA molecule in a sample. </p>
 
-<h3>
-<a id="what-is-used-now-and-why-we-need-this" class="anchor" href="#what-is-used-now-and-why-we-need-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is used now and why we need this</h3>
+<p>We won't go into too much detail here, but a PCR (polymerase chain reaction) is performed and the amount of DNA is measured at every cycle using fluorescent dyes. As the amount of DNA doubles after each PCR cycle, the fluorescence signal increases proportionally. At the end of the reaction, a threshold signal value is set and the cycle number at which the reaction passed the threshold value is calculated (CT). If the reaction started with more copies of the target molecule, the threshold will be reached earlier; if it started with less, the threshold will be reached later. Difference of 1 cycle corresponds to 2-fold difference between the target molecules in the beginning mixes. </p>
+
+<p>If you would like to go into more detail, we recommend <a href="http://www.nature.com/nprot/journal/v3/n6/full/nprot.2008.73.html">this paper</a> from Nature Protocols.</p>
+
+<p>Multiple reactions are run in parallel in order to test multiple samples (e.g. control vs treatment) and different genes in those samples. The difference between cycle numbers where a reaction passes a set threshold DNA amount, shows the difference between expression levels of two genes.</p>
+
+<h2>
+<a id="why-are-we-building-rt-analyzer" class="anchor" href="#why-are-we-building-rt-analyzer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why are we building RT-Analyzer?</h2>
 
 <p>There is no widely used, specialized program for RT-PCR analysis. People usually use Excel, which means a lot of time moving numbers around, typing in formulas etc. When the reaction numbers increase the sheets become hard to control. Finally, drawing the graphs in Excel can be a hassle. Adding error bars is not a simple task.</p>
+
+<p>RT-Analyzer is a free, open-source and platform-independent web app that allows researchers perform qRT-PCR analysis in their browsers in seconds.</p>
 
 <h2>
 <a id="input" class="anchor" href="#input" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input</h2>
 
-<p>Every reaction has two parameters: Sample and Gene. Corresponding to these parameters there will be a cycle number, e.g. "24.15". Different instruments have different output models, but a user can easily copy and paste their data into a .csv file in a predetermined format ("Sample","Gene","Cycle number"). So, the data will be input by uploading .csv files.</p>
+<p>Every reaction has four parameters: Location (coordinates of the reaction in a plate; A1, B7, C10 etc.), CT (the number of PCR cycle where the reaction passes a threshold DNA amount as measured by the fluorescent signal), Sample and Gene. </p>
 
-<p>In addition to the data, the user should be able to define "repeat samples" and special control genes. So, there should be a little form with a few menus.</p>
+<p>Different instruments have different output models, but a user can easily copy and paste their data into a .csv file in a predetermined format ("Location","CT","Sample","Gene"). RT-Analyzer accepts .csv files as input.</p>
+
+<p>In addition to the data, the user can define an "internal control gene", "biological replicate groups" and a "control sample" or "control group".</p>
 
 <h2>
 <a id="calculations" class="anchor" href="#calculations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calculations</h2>
 
-<p>Expression level of a Gene is determined in relation to a "control" gene selected by the user. So, the difference between cycle numbers should be calculated.</p>
-
-<p>If the Sample and Gene are the same for two reactions these are repeat reactions. So, data from these should be averaged. Also, the user will be able to select some "Sample" names that are repeats of each other. This should be averaged and standard deviations should be calculated. (The first group is possibly technical repeats and the second group is biological repeats. The user should be asked what to do with each type.)</p>
+<p>Reactions with Relative expression level of a Gene is determined in relation to the internal control gene selected by the user using the deltaCt method.</p>
 
 <h2>
 <a id="output" class="anchor" href="#output" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h2>
 
-<p>At the end, we will come to a list of averages and stdevs for each "Sample"-"Gene" pair. This should be outputted either as a table or csv, so that the user can take their data back to Excel if they wish to.</p>
+<p>RT-Analyzer currently returns a list of averages and stdevs for each "Sample"-"Gene" pair in a table that can be copied and transferred into an Excel file.</p>
 
-<p>The main output will be in the form of graphs. The user should be given a choice of graph types (bar, line etc.). The graph should be redrawn as the user chooses a different type. The user should be able to choose what type of error bars they want and these should be introduced automatically. The user should be able to change some parameters of the graph (colors, bar width etc.) for visual appeal. At the end the user should be able to save their graphs as an image at different resolutions for presentation or publication purposes.</p>
+<p>We are working on displaying the data on graphs. The user will be given a choice of graph types (bar, line etc.), will be able to add error bars, change colors and finally save the graph as an image for their presentation.</p>
 
 <h2>
 <a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h2>
 
-<p>All in all this is a simple program that would save a lot of time and help us create beautiful graphs. As it is our motto, the program should be easy to use and provide the same experience on different platforms from Macbook Pro to Chromebook.</p>
-        </article>
-      </div>
-    </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/ismailoglu" class="avatar"><img src="https://avatars3.githubusercontent.com/u/3931602?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/ismailoglu">ismailoglu</a> maintains <a href="https://github.com/ismailoglu/RT-analyzer">RT-Analyzer</a></p>
+<p><a href="http://rtanalyzer.labratapps.com">RT-Analyzer is currently available as an alpha version</a>. We would like people to give it a try and let us know how it worked out. Please send your feedback to <a href="mailto:rtanalyzer@gmail.com">rtanalyzer@gmail.com</a></p>
 
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ismailoglu/RT-analyzer">RT-Analyzer</a> is maintained by <a href="https://github.com/ismailoglu">ismailoglu</a>.</span>
 
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/ismailoglu/RT-analyzer/tarball/master" class="tar">tar</a><a href="https://github.com/ismailoglu/RT-analyzer/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
 
   
-</body>
+  </body>
 </html>
+
