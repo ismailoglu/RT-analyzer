@@ -48,11 +48,11 @@ For feedback: <a href="mailto:rtanalyzer@gmail.com">rtanalyzer@gmail.com</a></p>
 <h2>
 <a id="background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h2>
 
-<p>RT-PCR or <a href="http://en.wikipedia.org/wiki/Real-time_polymerase_chain_reaction">quantitative real-time PCR</a> is a technique that is used to analyze expression level of a specific RNA molecule in a sample. </p>
+<p>qRT-PCR or <a href="http://en.wikipedia.org/wiki/Real-time_polymerase_chain_reaction">quantitative real-time PCR</a> is a technique that is used to analyze expression level of a specific RNA molecule in a sample. </p>
 
 <p>We won't go into too much detail here, but a PCR (polymerase chain reaction) is performed and the amount of DNA is measured at every cycle using fluorescent dyes. As the amount of DNA doubles after each PCR cycle, the fluorescence signal increases proportionally. At the end of the reaction, a threshold signal value is set and the cycle number at which the reaction passed the threshold value is calculated (CT). If the reaction started with more copies of the target molecule, the threshold will be reached earlier; if it started with less, the threshold will be reached later. Difference of 1 cycle corresponds to 2-fold difference between the target molecules in the beginning mixes. </p>
 
-<p>If you would like to go into more detail, we recommend <a href="http://www.nature.com/nprot/journal/v3/n6/full/nprot.2008.73.html">this paper</a> from Nature Protocols.</p>
+<p>If you would like read more about qRT-PCR, we recommend <a href="http://www.nature.com/nprot/journal/v3/n6/full/nprot.2008.73.html">this paper</a> from Nature Protocols.</p>
 
 <p>Multiple reactions are run in parallel in order to test multiple samples (e.g. control vs treatment) and different genes in those samples. The difference between cycle numbers where a reaction passes a set threshold DNA amount, shows the difference between expression levels of two genes.</p>
 
@@ -75,7 +75,7 @@ For feedback: <a href="mailto:rtanalyzer@gmail.com">rtanalyzer@gmail.com</a></p>
 <h2>
 <a id="calculations" class="anchor" href="#calculations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calculations</h2>
 
-<p>Reactions with Relative expression level of a Gene is determined in relation to the internal control gene selected by the user using the deltaCt method.</p>
+<p>Relative expression level of a Gene is determined in relation to the internal control gene selected by the user using the deltaCt method described in the above mentioned paper.</p>
 
 <h2>
 <a id="output" class="anchor" href="#output" aria-hidden="true"><span class="octicon octicon-link"></span></a>Output</h2>
