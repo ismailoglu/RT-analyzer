@@ -51,7 +51,7 @@
             });
             experiment.metadata.analysis['step 2'].formatted = formatted;
         }
-        function formatStep3() {
+        function formatStep3(step) {
             var
                 formatted,
                 formattedStandardDeviation,
@@ -72,7 +72,7 @@
                     formattedStandardError.headers.push(probeName);
                 }
             });
-            Object.keys(experiment.data.analysis['step 3']).forEach(function forEach(sampleName) {
+            Object.keys(experiment.data.analysis[step]).forEach(function forEach(sampleName) {
                 var
                     row,
                     standardDeviationRow,
@@ -85,23 +85,23 @@
                 standardErrorRow.sampleName = sampleName;
                 formatted.headers.forEach(function forEach(probeName) {
                     if (
-                        experiment.data.analysis['step 3'][sampleName]
+                        experiment.data.analysis[step][sampleName]
                         &&
-                        experiment.data.analysis['step 3'][sampleName][probeName]
+                        experiment.data.analysis[step][sampleName][probeName]
                     ) {
-                        row.push(experiment.data.analysis['step 3'][sampleName][probeName].relativeExpressionValue);
+                        row.push(experiment.data.analysis[step][sampleName][probeName].relativeExpressionValue);
                     } else {
                         row.push('n/a');
                     }
                 });
                 formattedStandardDeviation.headers.forEach(function forEach(probeName) {
                     if (
-                        experiment.data.analysis['step 3'][sampleName]
+                        experiment.data.analysis[step][sampleName]
                         &&
-                        experiment.data.analysis['step 3'][sampleName][probeName]
+                        experiment.data.analysis[step][sampleName][probeName]
                     ) {
-                        if (experiment.data.analysis['step 3'][sampleName][probeName].standardDeviation) {
-                            standardDeviationRow.push(experiment.data.analysis['step 3'][sampleName][probeName].standardDeviation);
+                        if (experiment.data.analysis[step][sampleName][probeName].standardDeviation) {
+                            standardDeviationRow.push(experiment.data.analysis[step][sampleName][probeName].standardDeviation);
                         } else {
                             standardDeviationRow.push('n/a');
                         }
@@ -111,12 +111,12 @@
                 });
                 formattedStandardError.headers.forEach(function forEach(probeName) {
                     if (
-                        experiment.data.analysis['step 3'][sampleName]
+                        experiment.data.analysis[step][sampleName]
                         &&
-                        experiment.data.analysis['step 3'][sampleName][probeName]
+                        experiment.data.analysis[step][sampleName][probeName]
                     ) {
-                        if (experiment.data.analysis['step 3'][sampleName][probeName].standardError) {
-                            standardErrorRow.push(experiment.data.analysis['step 3'][sampleName][probeName].standardError);
+                        if (experiment.data.analysis[step][sampleName][probeName].standardError) {
+                            standardErrorRow.push(experiment.data.analysis[step][sampleName][probeName].standardError);
                         } else {
                             standardErrorRow.push('n/a');
                         }
@@ -128,9 +128,9 @@
                 formattedStandardDeviation.rows.push(standardDeviationRow);
                 formattedStandardError.rows.push(standardErrorRow);
             });
-            experiment.metadata.analysis['step 3'].formatted = formatted;
-            experiment.metadata.analysis['step 3'].formattedStandardDeviation = formattedStandardDeviation;
-            experiment.metadata.analysis['step 3'].formattedStandardError = formattedStandardError;
+            experiment.metadata.analysis[step].formatted = formatted;
+            experiment.metadata.analysis[step].formattedStandardDeviation = formattedStandardDeviation;
+            experiment.metadata.analysis[step].formattedStandardError = formattedStandardError;
         }
         function processData() {
             if (!experiment.data.controlProbe) {
@@ -244,27 +244,30 @@
                     experiment.data.analysis['step 3'][sample] = experiment.data.analysis['step 2'][sample];
                 }
             });
-            formatStep3();
+            formatStep3('step 3');
             experiment.metadata.analysis['step 3'].done = true;
         }
         function processStep4() {
             var
                 control;
             if (experiment.data.controlBiologicalReplicatesGroup) {
-                // control =
+                control = experiment.data.controlBiologicalReplicatesGroup;
             } else {
-                // control =
+                control = experiment.data.controlSample;
             }
             experiment.data.analysis['step 4'] = angular.copy(experiment.data.analysis['step 3']);
-            Object.keys(experiment.data.analysis['step 4']).forEach(function forEachProbe(probe) {
-                Object.keys(experiment.data.analysis['step 4']).forEach(function forEachValue(value) {
-                    // experiment.data.analysis['step 4'][probe][value] /= 1;
-                    // normalize by what...?
+            Object.keys(experiment.data.analysis['step 4']).forEach(function forEachSampleOrBiologicalReplicatesGroup(sampleOrBiologicalReplicatesGroup) {
+                Object.keys(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup]).forEach(function forEachValue(probe) {
+                    console.log(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue, experiment.data.analysis['step 3'][control][probe].relativeExpressionValue, experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis['step 3'][control][probe].relativeExpressionValue)
+                    console.log(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation, experiment.data.analysis['step 3'][control][probe].standardDeviation, experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis['step 3'][control][probe].standardDeviation)
+                    console.log(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError, experiment.data.analysis['step 3'][control][probe].standardError, experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis['step 3'][control][probe].standardError)
+                    experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis['step 3'][control][probe].relativeExpressionValue;
+                    experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis['step 3'][control][probe].standardDeviation;
+                    experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis['step 3'][control][probe].standardError;
                 });
             });
-            alert('Normalization not implemented yet!');
-            console.log(experiment.data.analysis);
-            console.log(JSON.stringify(experiment.data.analysis));
+            formatStep3('step 4'); // reusing formatStep3()
+            experiment.metadata.analysis['step 4'].done = true;
         }
     }
 }());

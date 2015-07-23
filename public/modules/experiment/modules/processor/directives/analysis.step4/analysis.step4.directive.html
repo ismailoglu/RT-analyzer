@@ -1,0 +1,152 @@
+<h3>Step 4</h3>
+<hr>
+<div
+    class="
+        table-responsive
+    "
+    >
+    <table
+        class="
+            table
+            table-bordered
+        "
+        >
+        <caption>Relative Expression Value by Probe for each Sample Normalized by Control Sample or Control Biological Replicates Group</caption>
+        <thead>
+            <tr>
+                <th>Sample</th>
+                <th
+                    colspan="{{processor.metadata.analysis['step 4'].formatted.headers.length}}"
+                    >
+                    Relative Expression Value by Probe Normalized by Control Sample or Control Biological Replicates Group
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                </th>
+                <th
+                    data-ng-repeat="header in processor.metadata.analysis['step 4'].formatted.headers"
+                    scope="column"
+                    >
+                    {{header}}
+                </th>
+            </tr>
+            <tr
+                data-ng-repeat="row in processor.metadata.analysis['step 4'].formatted.rows track by $index"
+                >
+                <th
+                    scope="row"
+                    >
+                    {{row.sampleName}}
+                </th>
+                <td
+                    data-ng-repeat="value in row track by $index"
+                    >
+                    {{value}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div
+    class="
+        table-responsive
+    "
+    >
+    <table
+        class="
+            table
+            table-bordered
+        "
+        >
+        <caption>Standard Deviation by Probe for each Sample Normalized by Control Sample or Control Biological Replicates Group</caption>
+        <thead>
+            <tr>
+                <th>Sample</th>
+                <th
+                    colspan="{{processor.metadata.analysis['step 4'].formattedStandardDeviation.headers.length}}"
+                    >
+                    Standard Deviation by Probe Normalized by Control Sample or Control Biological Replicates Group
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                </th>
+                <th
+                    data-ng-repeat="header in processor.metadata.analysis['step 4'].formattedStandardDeviation.headers"
+                    scope="column"
+                    >
+                    {{header}}
+                </th>
+            </tr>
+            <tr
+                data-ng-repeat="row in processor.metadata.analysis['step 4'].formattedStandardDeviation.rows track by $index"
+                >
+                <th
+                    scope="row"
+                    >
+                    {{row.sampleName}}
+                </th>
+                <td
+                    data-ng-repeat="value in row track by $index"
+                    >
+                    {{value}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div
+    class="
+        table-responsive
+    "
+    >
+    <table
+        class="
+            table
+            table-bordered
+        "
+        >
+        <caption>Standard Error by Probe for each Sample Normalized by Control Sample or Control Biological Replicates Group</caption>
+        <thead>
+            <tr>
+                <th>Sample</th>
+                <th
+                    colspan="{{processor.metadata.analysis['step 4'].formattedStandardError.headers.length}}"
+                    >
+                    Standard Error by Probe Normalized by Control Sample or Control Biological Replicates Group
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>
+                </th>
+                <th
+                    data-ng-repeat="header in processor.metadata.analysis['step 4'].formattedStandardError.headers"
+                    scope="column"
+                    >
+                    {{header}}
+                </th>
+            </tr>
+            <tr
+                data-ng-repeat="row in processor.metadata.analysis['step 4'].formattedStandardError.rows track by $index"
+                >
+                <th
+                    scope="row"
+                    >
+                    {{row.sampleName}}
+                </th>
+                <td
+                    data-ng-repeat="value in row track by $index"
+                    >
+                    {{value}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
