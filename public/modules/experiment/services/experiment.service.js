@@ -30,10 +30,12 @@
             metadata: {
                 analysis: {
                     'step 1': {
-                        done: false
+                        done: false,
+                        show: false
                     },
                     'step 2': {
-                        done: false
+                        done: false,
+                        show: false
                     },
                     'step 3': {
                         done: false

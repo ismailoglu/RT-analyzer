@@ -1,0 +1,39 @@
+<h3>Missing Values by Plate</h3>
+<hr>
+<p>
+    The following wells (grouped by plate) had sample and probe values, but no cycle value, so they were ignored.
+</p>
+<div
+    data-ng-repeat="(plate, positions) in processor.metadata.missing"
+    >
+    <div
+        class="
+            table-responsive
+        "
+        >
+        <table
+            class="
+                table
+                table-bordered
+            "
+            >
+            <caption>Plate {{plate}}</caption>
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Sample</th>
+                    <th>Probe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    data-ng-repeat="(position, data) in positions"
+                    >
+                    <td>{{position}}</td>
+                    <td>{{data.sample}}</td>
+                    <td>{{data.probe}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

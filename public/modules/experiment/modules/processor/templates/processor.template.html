@@ -16,12 +16,41 @@
     <br>
     <br>
     <div
+        data-ng-if="processor.metadata.missing"
+        data-pcr-missing
+        >
+    </div>
+    <div
+        class="checkbox"
         data-ng-if="processor.metadata.analysis['step 1'].done"
+        >
+        <label>
+            <input
+                data-ng-model="processor.metadata.analysis['step 1'].show"
+                type="checkbox"
+                >
+                Show Step 1
+        </label>
+    </div>
+    <div
+        data-ng-if="processor.metadata.analysis['step 1'].done &amp;&amp; processor.metadata.analysis['step 1'].show"
         data-pcr-analysis-step1
         >
     </div>
     <div
+        class="checkbox"
         data-ng-if="processor.metadata.analysis['step 2'].done"
+        >
+        <label>
+            <input
+                data-ng-model="processor.metadata.analysis['step 2'].show"
+                type="checkbox"
+                >
+                Show Step 2
+        </label>
+    </div>
+    <div
+        data-ng-if="processor.metadata.analysis['step 2'].done &amp;&amp; processor.metadata.analysis['step 2'].show"
         data-pcr-analysis-step2
         >
     </div>

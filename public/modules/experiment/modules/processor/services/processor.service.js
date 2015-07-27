@@ -153,7 +153,7 @@
         function processStep1() {
             experiment.data.samples.forEach(function forEach(sample) {
                 experiment.data.analysis['step 1'][sample] = {};
-                experiment.data.plates.forEach(function forEach(plate) {
+                experiment.data.plates.forEach(function forEach(plate, index) {
                     plate.positions.forEach(function forEach(position) {
                         if (plate[position].sample === sample) {
                             if (experiment.data.analysis['step 1'][sample][plate[position].probe] === undefined) {
@@ -162,7 +162,21 @@
                                     experiment.data.analysis['step 1'][sample][plate[position].probe].cycles = [];
                                 }
                             }
-                            experiment.data.analysis['step 1'][sample][plate[position].probe].cycles.push(plate[position].cycle);
+                            if (plate[position].cycle) {
+                                experiment.data.analysis['step 1'][sample][plate[position].probe].cycles.push(plate[position].cycle);
+                            } else {
+                                if (!experiment.metadata.missing) {
+                                    experiment.metadata.missing = {};
+                                }
+                                if (!experiment.metadata.missing[index + 1]) {
+                                    experiment.metadata.missing[index + 1] = {};
+                                }
+                                if (!experiment.metadata.missing[index + 1][position]) {
+                                    experiment.metadata.missing[index + 1][position] = {};
+                                }
+                                experiment.metadata.missing[index + 1][position].sample = sample;
+                                experiment.metadata.missing[index + 1][position].probe = plate[position].probe;
+                            }
                         }
                     });
                 });
@@ -180,7 +194,9 @@
                         cycles += 1;
                         total += +cycle;
                     });
-                    experiment.data.analysis['step 1'][sample][probe].average = total / cycles;
+                    if (cycles > 0) {
+                        experiment.data.analysis['step 1'][sample][probe].average = total / cycles;
+                    }
                 });
             });
             experiment.metadata.analysis['step 1'].done = true;
@@ -198,7 +214,9 @@
                         }
                         controlProbeAverage = experiment.data.analysis['step 1'][sampleName][experiment.data.controlProbe].average;
                         probeAverage = experiment.data.analysis['step 1'][sampleName][probeName].average;
-                        experiment.data.analysis['step 2'][sampleName][probeName].relativeExpressionValue = Math.pow(2, (controlProbeAverage - probeAverage));
+                        if (probeAverage) {
+                            experiment.data.analysis['step 2'][sampleName][probeName].relativeExpressionValue = Math.pow(2, (controlProbeAverage - probeAverage));
+                        }
                     }
                 });
             });
@@ -215,7 +233,9 @@
                         if (experiment.data.analysis['step 3'][biologicalReplicatesGroup][probe] === undefined) {
                             experiment.data.analysis['step 3'][biologicalReplicatesGroup][probe] = [];
                         }
-                        experiment.data.analysis['step 3'][biologicalReplicatesGroup][probe].push(experiment.data.analysis['step 2'][biologicalReplicate][probe].relativeExpressionValue);
+                        if (experiment.data.analysis['step 2'][biologicalReplicate][probe].relativeExpressionValue) {
+                            experiment.data.analysis['step 3'][biologicalReplicatesGroup][probe].push(experiment.data.analysis['step 2'][biologicalReplicate][probe].relativeExpressionValue);
+                        }
                     });
                 });
                 Object.keys(experiment.data.analysis['step 3'][biologicalReplicatesGroup]).forEach(function forEach(probe) {
@@ -258,12 +278,27 @@
             experiment.data.analysis['step 4'] = angular.copy(experiment.data.analysis['step 3']);
             Object.keys(experiment.data.analysis['step 4']).forEach(function forEachSampleOrBiologicalReplicatesGroup(sampleOrBiologicalReplicatesGroup) {
                 Object.keys(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup]).forEach(function forEachValue(probe) {
-                    console.log(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue, experiment.data.analysis['step 3'][control][probe].relativeExpressionValue, experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis['step 3'][control][probe].relativeExpressionValue)
-                    console.log(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation, experiment.data.analysis['step 3'][control][probe].standardDeviation, experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis['step 3'][control][probe].standardDeviation)
-                    console.log(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError, experiment.data.analysis['step 3'][control][probe].standardError, experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis['step 3'][control][probe].standardError)
-                    experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis['step 3'][control][probe].relativeExpressionValue;
-                    experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis['step 3'][control][probe].standardDeviation;
-                    experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis['step 3'][control][probe].standardError;
+                    if (
+                        experiment.data.analysis['step 3'][control][probe].relativeExpressionValue
+                        &&
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue
+                    ) {
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis['step 3'][control][probe].relativeExpressionValue;
+                    }
+                    if (
+                        experiment.data.analysis['step 3'][control][probe].standardDeviation
+                        &&
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation
+                    ) {
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis['step 3'][control][probe].standardDeviation;
+                    }
+                    if (
+                        experiment.data.analysis['step 3'][control][probe].standardError
+                        &&
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError
+                    ) {
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis['step 3'][control][probe].standardError;
+                    }
                 });
             });
             formatStep3('step 4'); // reusing formatStep3()
