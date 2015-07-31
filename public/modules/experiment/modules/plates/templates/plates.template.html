@@ -3,12 +3,47 @@
     >
     <h2>Plates</h2>
     <hr>
+    <button
+        class="
+            btn
+            btn-default
+        "
+        data-ng-click="plates.addPlate(plates.data.plates.length)"
+        type="button"
+        >
+        Add Plate {{plates.data.plates.length + 1}}
+    </button>
+    <div
+        data-ng-if="plates.data.plates.length"
+        >
+        <br>
+        <div
+            class="
+                btn-group
+            "
+            >
+            <button
+                class="
+                    btn
+                    btn-default
+                "
+                data-ng-click="plates.currentPlateIndex = $index"
+                data-ng-repeat="plate in plates.data.plates"
+                type="button"
+                >
+                Plate {{$index + 1}}
+            </button>
+        </div>
+        <br>
+        <br>
+    </div>
     <div
         class="
             plate
         "
         data-ng-init="plateIndex = $index"
         data-ng-repeat="plate in plates.data.plates"
+        data-ng-show="plates.currentPlateIndex === $index"
         >
         <h3>
             Plate {{$index + 1}}
@@ -65,16 +100,6 @@
         </div>
         <br>
     </div>
-    <button
-        class="
-            btn
-            btn-default
-        "
-        data-ng-click="plates.addPlate()"
-        type="button"
-        >
-        Add Plate {{plates.data.plates.length + 1}}
-    </button>
 </div>
 <link
     href="modules/experiment/modules/plates/styles/plates.css"

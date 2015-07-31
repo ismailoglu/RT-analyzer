@@ -14,7 +14,15 @@
         var
             vm;
         vm = this;
-        vm.addPlate = plates.addPlate;
+        vm.addPlate = addPlate;
+        vm.currentPlateIndex = 0;
         vm.data = experiment.data;
+        //
+        // functions
+        //
+        function addPlate(nextIndex) {
+            vm.currentPlateIndex = nextIndex;
+            plates.addPlate();
+        }
     }
 }());

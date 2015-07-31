@@ -20,7 +20,7 @@
         /*
          * function
          */
-        function formatStep2() {
+        function formatStep2(step) {
             var
                 formatted;
             formatted = {};
@@ -38,18 +38,18 @@
                 row.sampleName = sampleName;
                 formatted.headers.forEach(function forEach(probeName) {
                     if (
-                        experiment.data.analysis['step 2'][sampleName]
+                        experiment.data.analysis[step][sampleName]
                         &&
-                        experiment.data.analysis['step 2'][sampleName][probeName]
+                        experiment.data.analysis[step][sampleName][probeName]
                     ) {
-                        row.push(experiment.data.analysis['step 2'][sampleName][probeName].relativeExpressionValue);
+                        row.push(experiment.data.analysis[step][sampleName][probeName].relativeExpressionValue);
                     } else {
                         row.push('n/a');
                     }
                 });
                 formatted.rows.push(row);
             });
-            experiment.metadata.analysis['step 2'].formatted = formatted;
+            experiment.metadata.analysis[step].formatted = formatted;
         }
         function formatStep3(step) {
             var
@@ -132,7 +132,28 @@
             experiment.metadata.analysis[step].formattedStandardDeviation = formattedStandardDeviation;
             experiment.metadata.analysis[step].formattedStandardError = formattedStandardError;
         }
+        function reset() {
+            experiment.data.analysis['step 1'] = {};
+            experiment.data.analysis['step 2'] = {};
+            experiment.data.analysis['step 3'] = {};
+            experiment.data.analysis['step 4'] = {};
+            experiment.metadata.analysis['step 1'] = {
+                done: false,
+                show: false
+            };
+            experiment.metadata.analysis['step 2'] = {
+                done: false,
+                show: false
+            };
+            experiment.metadata.analysis['step 3'] = {
+                done: false
+            };
+            experiment.metadata.analysis['step 4'] = {
+                done: false
+            };
+        }
         function processData() {
+            reset();
             if (!experiment.data.controlProbe) {
                 alert('NO_CONTROL_PROBE');
                 throw 'NO_CONTROL_PROBE';
@@ -141,13 +162,22 @@
             processStep2();
             if (Object.keys(experiment.data.biologicalReplicatesGroups).length) {
                 processStep3();
-            }
-            if (
-                experiment.data.controlBiologicalReplicatesGroup
-                ||
-                experiment.data.controlSample
-            ) {
-                processStep4();
+                if (
+                    experiment.data.controlBiologicalReplicatesGroup
+                    ||
+                    experiment.data.controlSample
+                ) {
+                    processStep4();
+                }
+            } else {
+                experiment.metadata.analysis['step 2'].show = true;
+                if (
+                    experiment.data.controlBiologicalReplicatesGroup
+                    ||
+                    experiment.data.controlSample
+                ) {
+                    otherProcessStep4();
+                }
             }
         }
         function processStep1() {
@@ -165,9 +195,6 @@
                             if (plate[position].cycle) {
                                 experiment.data.analysis['step 1'][sample][plate[position].probe].cycles.push(plate[position].cycle);
                             } else {
-                                if (!experiment.metadata.missing) {
-                                    experiment.metadata.missing = {};
-                                }
                                 if (!experiment.metadata.missing[index + 1]) {
                                     experiment.metadata.missing[index + 1] = {};
                                 }
@@ -176,6 +203,7 @@
                                 }
                                 experiment.metadata.missing[index + 1][position].sample = sample;
                                 experiment.metadata.missing[index + 1][position].probe = plate[position].probe;
+                                experiment.metadata.missing.done = true;
                             }
                         }
                     });
@@ -220,7 +248,7 @@
                     }
                 });
             });
-            formatStep2();
+            formatStep2('step 2');
             experiment.metadata.analysis['step 2'].done = true;
         }
         function processStep3() {
@@ -302,6 +330,43 @@
                 });
             });
             formatStep3('step 4'); // reusing formatStep3()
+            experiment.metadata.analysis['step 4'].done = true;
+        }
+        function otherProcessStep4() {
+            var
+                control;
+            if (experiment.data.controlBiologicalReplicatesGroup) {
+                control = experiment.data.controlBiologicalReplicatesGroup;
+            } else {
+                control = experiment.data.controlSample;
+            }
+            experiment.data.analysis['step 4'] = angular.copy(experiment.data.analysis['step 2']);
+            Object.keys(experiment.data.analysis['step 4']).forEach(function forEachSampleOrBiologicalReplicatesGroup(sampleOrBiologicalReplicatesGroup) {
+                Object.keys(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup]).forEach(function forEachValue(probe) {
+                    if (
+                        experiment.data.analysis['step 2'][control][probe].relativeExpressionValue
+                        &&
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue
+                    ) {
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis['step 2'][control][probe].relativeExpressionValue;
+                    }
+                    if (
+                        experiment.data.analysis['step 2'][control][probe].standardDeviation
+                        &&
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation
+                    ) {
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis['step 2'][control][probe].standardDeviation;
+                    }
+                    if (
+                        experiment.data.analysis['step 2'][control][probe].standardError
+                        &&
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError
+                    ) {
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis['step 2'][control][probe].standardError;
+                    }
+                });
+            });
+            formatStep2('step 4'); // reusing formatStep2()
             experiment.metadata.analysis['step 4'].done = true;
         }
     }

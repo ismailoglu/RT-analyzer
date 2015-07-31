@@ -1,17 +1,3 @@
-### June 2015 News
-
-We're a living a transition phase over here. While we do some clean up and organize some stuff please take a look at our proof-of-concept demo and a demo for the alpha we're developing right now:
-
- - [mullis - a proof-of-concept for the RT-Analyzer](http://anzol.biz/mullis)
- - [RT-Analyzer Alpha 1](http://anzol.biz/rt-analyzer-alpha-1.0/)
-
-Here is some sample data to try: [Sample Set 1](http://anzol.biz/rt-analyzer-alpha-1.0/data/RT-Analyzer_-_Sample_set_1.csv) and [Sample Set 2](http://anzol.biz/rt-analyzer-alpha-1.0/data/RT-Analyzer_-_Sample_set_2.csv).
-
-If you have any questions, comments, suggestions please open an issue!
-
-If you're not sure what it's all about yet read on!
-
-
 RT-analyzer
 ===========
 

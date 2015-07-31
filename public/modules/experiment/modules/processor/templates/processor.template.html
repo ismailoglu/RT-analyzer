@@ -16,7 +16,7 @@
     <br>
     <br>
     <div
-        data-ng-if="processor.metadata.missing"
+        data-ng-if="processor.metadata.missing.done"
         data-pcr-missing
         >
     </div>
@@ -29,7 +29,7 @@
                 data-ng-model="processor.metadata.analysis['step 1'].show"
                 type="checkbox"
                 >
-                Show Step 1
+                Show Technical Replicate Averages
         </label>
     </div>
     <div
@@ -46,7 +46,7 @@
                 data-ng-model="processor.metadata.analysis['step 2'].show"
                 type="checkbox"
                 >
-                Show Step 2
+                Show Relative Expression Values Normalized to Control Probe
         </label>
     </div>
     <div
