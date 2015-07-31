@@ -297,35 +297,40 @@
         }
         function processStep4() {
             var
+                compareTo,
                 control;
             if (experiment.data.controlBiologicalReplicatesGroup) {
                 control = experiment.data.controlBiologicalReplicatesGroup;
+                compareTo = 'step 3';
             } else {
                 control = experiment.data.controlSample;
+                compareTo = 'step 2';
             }
             experiment.data.analysis['step 4'] = angular.copy(experiment.data.analysis['step 3']);
             Object.keys(experiment.data.analysis['step 4']).forEach(function forEachSampleOrBiologicalReplicatesGroup(sampleOrBiologicalReplicatesGroup) {
                 Object.keys(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup]).forEach(function forEachValue(probe) {
+                    // if control sample look for value on step 2
+                    // if control biorep group look for value on step 3
                     if (
-                        experiment.data.analysis['step 3'][control][probe].relativeExpressionValue
+                        experiment.data.analysis[compareTo][control][probe].relativeExpressionValue
                         &&
                         experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue
                     ) {
-                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis['step 3'][control][probe].relativeExpressionValue;
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].relativeExpressionValue /= experiment.data.analysis[compareTo][control][probe].relativeExpressionValue;
                     }
                     if (
-                        experiment.data.analysis['step 3'][control][probe].standardDeviation
+                        experiment.data.analysis[compareTo][control][probe].standardDeviation
                         &&
                         experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation
                     ) {
-                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis['step 3'][control][probe].standardDeviation;
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardDeviation /= experiment.data.analysis[compareTo][control][probe].standardDeviation;
                     }
                     if (
-                        experiment.data.analysis['step 3'][control][probe].standardError
+                        experiment.data.analysis[compareTo][control][probe].standardError
                         &&
                         experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError
                     ) {
-                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis['step 3'][control][probe].standardError;
+                        experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup][probe].standardError /= experiment.data.analysis[compareTo][control][probe].standardError;
                     }
                 });
             });
