@@ -41,6 +41,8 @@
                         experiment.data.analysis[step][sampleName]
                         &&
                         experiment.data.analysis[step][sampleName][probeName]
+                        &&
+                        experiment.data.analysis[step][sampleName][probeName].relativeExpressionValue
                     ) {
                         row.push(experiment.data.analysis[step][sampleName][probeName].relativeExpressionValue);
                     } else {
@@ -88,6 +90,8 @@
                         experiment.data.analysis[step][sampleName]
                         &&
                         experiment.data.analysis[step][sampleName][probeName]
+                        &&
+                        experiment.data.analysis[step][sampleName][probeName].relativeExpressionValue
                     ) {
                         row.push(experiment.data.analysis[step][sampleName][probeName].relativeExpressionValue);
                     } else {
@@ -151,6 +155,8 @@
             experiment.metadata.analysis['step 4'] = {
                 done: false
             };
+            experiment.metadata.missing = {};
+            experiment.metadata.missingDone = false;
         }
         function processData() {
             reset();
@@ -179,6 +185,7 @@
                     otherProcessStep4();
                 }
             }
+            console.log(experiment);
         }
         function processStep1() {
             experiment.data.samples.forEach(function forEach(sample) {
