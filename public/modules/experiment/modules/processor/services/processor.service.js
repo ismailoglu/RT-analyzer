@@ -185,7 +185,6 @@
                     otherProcessStep4();
                 }
             }
-            console.log(experiment);
         }
         function processStep1() {
             experiment.data.samples.forEach(function forEach(sample) {
