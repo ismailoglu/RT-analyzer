@@ -164,6 +164,15 @@
                 alert('NO_CONTROL_PROBE');
                 throw 'NO_CONTROL_PROBE';
             }
+            experiment.raw = JSON.stringify(
+                experiment,
+                function replacer(key, value) {
+                    if (key === "raw") {
+                        return undefined;
+                    }
+                    return value;
+                }
+            );
             processStep1();
             processStep2();
             if (Object.keys(experiment.data.biologicalReplicatesGroups).length) {

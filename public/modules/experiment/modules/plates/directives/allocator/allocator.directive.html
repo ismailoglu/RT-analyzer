@@ -26,7 +26,7 @@
                 item
             "
             data-ng-click="allocator.selectColumn(column, allocator.plateIndex)"
-            data-ng-repeat="column in allocator.data.plates[allocator.plateIndex].columns"
+            data-ng-repeat="column in allocator.experiment.data.plates[allocator.plateIndex].columns"
             tabindex="0"
             >
             {{column}}
@@ -36,7 +36,7 @@
         class="
             row
         "
-        data-ng-repeat="row in allocator.data.plates[allocator.plateIndex].rows"
+        data-ng-repeat="row in allocator.experiment.data.plates[allocator.plateIndex].rows"
         >
         <div
             class="
@@ -59,7 +59,7 @@
                     selected: allocator.isSelected(row + column)
                 }"
                 data-ng-click="allocator.selectPosition(row + column, allocator.plateIndex)"
-                data-ng-repeat="column in allocator.data.plates[allocator.plateIndex].columns"
+                data-ng-repeat="column in allocator.experiment.data.plates[allocator.plateIndex].columns"
                 data-ng-style="{
                     'background-color': allocator.style.backgroundColor(allocator.variableTypeAsPropertyName, allocator.plateIndex, row + column)
                 }"
@@ -68,7 +68,7 @@
         </div>
     </div>
     <div
-        data-ng-if="allocator.data[allocator.variableTypeAsPropertyName].length > 0"
+        data-ng-if="allocator.experiment.data[allocator.variableTypeAsPropertyName].length > 0"
         >
         <br>
         <ul
@@ -81,7 +81,7 @@
                     variable
                 "
                 data-ng-click="allocator.set(allocator.variableTypeAsPropertyName, allocator.plateIndex, variable)"
-                data-ng-repeat="variable in allocator.data[allocator.variableTypeAsPropertyName]"
+                data-ng-repeat="variable in allocator.experiment.data[allocator.variableTypeAsPropertyName]"
                 tabindex="0"
                 >
                 <span
@@ -89,7 +89,7 @@
                         colour
                     "
                     style="
-                        background-color: {{allocator.metadata[allocator.variableTypeAsPropertyName].colours[$index]}}
+                        background-color: {{allocator.experiment.metadata[allocator.variableTypeAsPropertyName].colours[$index]}}
                     "
                     >
                 </span>

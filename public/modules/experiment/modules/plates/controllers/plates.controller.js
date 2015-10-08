@@ -16,7 +16,8 @@
         vm = this;
         vm.addPlate = addPlate;
         vm.currentPlateIndex = 0;
-        vm.data = experiment.data;
+        vm.experiment = experiment;
+        // vm.data = experiment.data;
         //
         // functions
         //

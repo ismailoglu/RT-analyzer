@@ -15,52 +15,83 @@
     </button>
     <br>
     <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button
+                class="btn btn-default"
+                data-ng-click="processor.gen()"
+                type="button"
+                >
+                Generate
+            </button>
+          </span>
+          <input
+            class="form-control"
+            data-ng-model="processor.allData"
+            type="text"
+            >
+          <span class="input-group-btn">
+            <button
+                class="btn btn-default"
+                data-ng-click="processor.load()"
+                type="button"
+                >
+                Load
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
     <div
-        data-ng-if="processor.metadata.missingDone"
+        data-ng-if="processor.experiment.metadata.missingDone"
         data-pcr-missing
         >
     </div>
     <div
         class="checkbox"
-        data-ng-if="processor.metadata.analysis['step 1'].done"
+        data-ng-if="processor.experiment.metadata.analysis['step 1'].done"
         >
         <label>
             <input
-                data-ng-model="processor.metadata.analysis['step 1'].show"
+                data-ng-model="processor.experiment.metadata.analysis['step 1'].show"
                 type="checkbox"
                 >
                 Show Technical Replicate Averages
         </label>
     </div>
     <div
-        data-ng-if="processor.metadata.analysis['step 1'].done &amp;&amp; processor.metadata.analysis['step 1'].show"
+        data-ng-if="processor.experiment.metadata.analysis['step 1'].done &amp;&amp; processor.experiment.metadata.analysis['step 1'].show"
         data-pcr-analysis-step1
         >
     </div>
     <div
         class="checkbox"
-        data-ng-if="processor.metadata.analysis['step 2'].done"
+        data-ng-if="processor.experiment.metadata.analysis['step 2'].done"
         >
         <label>
             <input
-                data-ng-model="processor.metadata.analysis['step 2'].show"
+                data-ng-model="processor.experiment.metadata.analysis['step 2'].show"
                 type="checkbox"
                 >
                 Show Relative Expression Values Normalized to Control Probe
         </label>
     </div>
     <div
-        data-ng-if="processor.metadata.analysis['step 2'].done &amp;&amp; processor.metadata.analysis['step 2'].show"
+        data-ng-if="processor.experiment.metadata.analysis['step 2'].done &amp;&amp; processor.experiment.metadata.analysis['step 2'].show"
         data-pcr-analysis-step2
         >
     </div>
     <div
-        data-ng-if="processor.metadata.analysis['step 3'].done"
+        data-ng-if="processor.experiment.metadata.analysis['step 3'].done"
         data-pcr-analysis-step3
         >
     </div>
     <div
-        data-ng-if="processor.metadata.analysis['step 4'].done"
+        data-ng-if="processor.experiment.metadata.analysis['step 4'].done"
         data-pcr-analysis-step4
         >
     </div>

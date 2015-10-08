@@ -8,13 +8,13 @@
             btn
             btn-default
         "
-        data-ng-click="plates.addPlate(plates.data.plates.length)"
+        data-ng-click="plates.addPlate(plates.experiment.data.plates.length)"
         type="button"
         >
-        Add Plate {{plates.data.plates.length + 1}}
+        Add Plate {{plates.experiment.data.plates.length + 1}}
     </button>
     <div
-        data-ng-if="plates.data.plates.length"
+        data-ng-if="plates.experiment.data.plates.length"
         >
         <br>
         <div
@@ -28,7 +28,7 @@
                     btn-default
                 "
                 data-ng-click="plates.currentPlateIndex = $index"
-                data-ng-repeat="plate in plates.data.plates"
+                data-ng-repeat="plate in plates.experiment.data.plates"
                 type="button"
                 >
                 Plate {{$index + 1}}
@@ -42,7 +42,7 @@
             plate
         "
         data-ng-init="plateIndex = $index"
-        data-ng-repeat="plate in plates.data.plates"
+        data-ng-repeat="plate in plates.experiment.data.plates"
         data-ng-show="plates.currentPlateIndex === $index"
         >
         <h3>
@@ -86,7 +86,7 @@
             >
             <label>
                 <input
-                    data-ng-model="plates.data.plates[$index].showConfiguration"
+                    data-ng-model="plates.experiment.data.plates[$index].showConfiguration"
                     type="checkbox"
                     >
                     Edit Cycle Values
@@ -94,7 +94,7 @@
         </div>
         <br>
         <div
-            data-ng-if="plates.data.plates[$index].showConfiguration"
+            data-ng-if="plates.experiment.data.plates[$index].showConfiguration"
             data-pcr-plate
             >
         </div>

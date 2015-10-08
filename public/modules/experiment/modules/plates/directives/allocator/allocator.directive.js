@@ -30,10 +30,11 @@
                 vm;
             selected = [];
             vm = this;
-            vm.data = experiment.data;
+            vm.experiment = experiment;
+            // vm.data = experiment.data;
             vm.isFilled = isFilled;
             vm.isSelected = isSelected;
-            vm.metadata = experiment.metadata;
+            // vm.metadata = experiment.metadata;
             vm.selectColumn = selectColumn;
             vm.selectPosition = selectPosition;
             vm.selectRow = selectRow;
@@ -58,7 +59,13 @@
                 if (variableTypeAsPropertyName === 'samples') {
                     variableName = 'sample';
                 }
-                variable = experiment.data.plates[plateIndex][position][variableName];
+                if (
+                    experiment.data.plates[plateIndex]
+                    &&
+                    experiment.data.plates[plateIndex][position]
+                ) {
+                    variable = experiment.data.plates[plateIndex][position][variableName];
+                }
                 if (variable) {
                     variableIndex = experiment.data[variableTypeAsPropertyName].indexOf(variable);
                     colour = experiment.metadata[variableTypeAsPropertyName].colours[variableIndex];
@@ -79,7 +86,13 @@
                 if (variableTypeAsPropertyName === 'samples') {
                     variableName = 'sample';
                 }
-                variable = experiment.data.plates[plateIndex][position][variableName];
+                if (
+                    experiment.data.plates[plateIndex]
+                    &&
+                    experiment.data.plates[plateIndex][position]
+                ) {
+                    variable = experiment.data.plates[plateIndex][position][variableName];
+                }
                 if (variable) {
                     return true;
                 }

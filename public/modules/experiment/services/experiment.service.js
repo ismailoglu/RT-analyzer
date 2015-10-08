@@ -67,7 +67,9 @@
                     controlVariablePropertyName: 'controlSample',
                     remove: makeRemoveVariableFunction('samples')
                 }
-            }
+            },
+            raw: '',
+            test: 42
         };
         return service;
         /*

@@ -54,7 +54,7 @@
         </div>
     </form>
     <div
-        data-ng-if="variables.data[variables.variableTypeAsPropertyName].length > 0"
+        data-ng-if="variables.experiment.data[variables.variableTypeAsPropertyName].length > 0"
         >
         <br>
         <ol>
@@ -63,14 +63,14 @@
                     variable
                 "
                 data-ng-click="variables.change($index)"
-                data-ng-repeat="variable in variables.data[variables.variableTypeAsPropertyName]"
+                data-ng-repeat="variable in variables.experiment.data[variables.variableTypeAsPropertyName]"
                 >
                 <span
                     class="
                         colour
                     "
                     style="
-                        background-color: {{variables.metadata[variables.variableTypeAsPropertyName].colours[$index]}}
+                        background-color: {{variables.experiment.metadata[variables.variableTypeAsPropertyName].colours[$index]}}
                     "
                     >
                 </span>
@@ -112,8 +112,8 @@
                         form-control
                     "
                     data-ng-change="variables.onControlVariableChange()"
-                    data-ng-model="variables.data[variables.metadata[variables.variableTypeAsPropertyName].controlVariablePropertyName]"
-                    data-ng-options="variable for variable in variables.data[variables.variableTypeAsPropertyName]"
+                    data-ng-model="variables.experiment.data[variables.experiment.metadata[variables.variableTypeAsPropertyName].controlVariablePropertyName]"
+                    data-ng-options="variable for variable in variables.experiment.data[variables.variableTypeAsPropertyName]"
                     id="control{{variables.variableTypeAsSingularNoun}}"
                     >
                     <option
@@ -126,7 +126,7 @@
         </form>
     </div>
     <div
-        data-ng-if="variables.data[variables.variableTypeAsPropertyName].length > 1"
+        data-ng-if="variables.experiment.data[variables.variableTypeAsPropertyName].length > 1"
         >
         <br>
         <div
