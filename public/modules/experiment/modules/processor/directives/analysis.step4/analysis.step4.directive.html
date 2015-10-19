@@ -52,10 +52,25 @@
     </table>
 </div>
 <div
+    class="checkbox"
+    >
+    <label>
+        <input
+            data-ng-model="processor.experiment.metadata.analysis['step 4'].showStandardDeviation"
+            type="checkbox"
+            >
+            Show Standard Deviation by Probe for each Sample
+    </label>
+</div>
+<div
     class="
         table-responsive
     "
-    data-ng-if="processor.experiment.metadata.analysis['step 4'].formattedStandardDeviation"
+    data-ng-if="
+        processor.experiment.metadata.analysis['step 4'].formattedStandardDeviation
+        &amp;&amp;
+        processor.experiment.metadata.analysis['step 4'].showStandardDeviation
+    "
     >
     <table
         class="
@@ -103,10 +118,25 @@
     </table>
 </div>
 <div
+    class="checkbox"
+    >
+    <label>
+        <input
+            data-ng-model="processor.experiment.metadata.analysis['step 4'].showStandardError"
+            type="checkbox"
+            >
+            Show Standard Error by Probe for each Sample
+    </label>
+</div>
+<div
     class="
         table-responsive
     "
-    data-ng-if="processor.experiment.metadata.analysis['step 4'].formattedStandardError"
+    data-ng-if="
+        processor.experiment.metadata.analysis['step 4'].formattedStandardError
+        &amp;&amp;
+        processor.experiment.metadata.analysis['step 4'].showStandardError
+    "
     >
     <table
         class="
@@ -153,36 +183,3 @@
         </tbody>
     </table>
 </div>
-<div style="width: 100%">
-<canvas id="canvasStep4" height="450" width="600"></canvas>
-</div>
-<script>
-var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-var barChartData4 = {
-labels : ["January","February","March","April","May","June","July"],
-datasets : [
-{
-fillColor : "rgba(220,220,220,0.5)",
-strokeColor : "rgba(220,220,220,0.8)",
-highlightFill: "rgba(220,220,220,0.75)",
-highlightStroke: "rgba(220,220,220,1)",
-data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
-error : [randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10]
-},
-{
-fillColor : "rgba(151,187,205,0.5)",
-strokeColor : "rgba(151,187,205,0.8)",
-highlightFill : "rgba(151,187,205,0.75)",
-highlightStroke : "rgba(151,187,205,1)",
-data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()],
-error : [randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10,randomScalingFactor()/10]
-}
-]
-}
-// window.onload = function(){
-var ctx4 = document.getElementById("canvasStep4").getContext("2d");
-window.myBar4 = new Chart(ctx4).Bar(barChartData4, {
-responsive : true
-});
-// }
-</script>

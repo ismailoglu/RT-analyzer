@@ -113,7 +113,6 @@
                 });
             }
             function selectPosition(position) {
-                console.log(position)
                 var
                     indexOfPosition;
                 indexOfPosition = selected.indexOf(position);
