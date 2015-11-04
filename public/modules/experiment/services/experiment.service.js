@@ -46,6 +46,8 @@
                 },
                 biologicalReplicatesGroups: {
                     add: addBiologicalReplicatesGroup,
+                    change: changeBiologicalReplicatesGroupColour,
+                    colours: [],
                     samples: {},
                     remove: removeBiologicalReplicatesGroup
                 },
@@ -97,7 +99,16 @@
                         service.data.biologicalReplicatesGroups[name] = samples;
                     }
                 });
+                service.metadata.biologicalReplicatesGroups.colours[name] = Please.make_color()[0];
+                // service.metadata.biologicalReplicatesGroups.colours.push(Please.make_color()[0]);
             }
+        }
+        function changeBiologicalReplicatesGroupColour(name) {
+            var
+                colour;
+            colour = Please.make_color()[0];
+            service.metadata.biologicalReplicatesGroups.colours[name] = colour;
+            return colour;
         }
         function coerceModel(from) {
             if (from === 'controlBiologicalReplicatesGroup') {
@@ -169,6 +180,7 @@
                 service.metadata.biologicalReplicatesGroups.samples[sampleName].used = false;
             });
             delete service.data.biologicalReplicatesGroups[name];
+            delete service.metadata.biologicalReplicatesGroups.colours[name];
         }
         function prepareBiologicalReplicatesGroupsForSampleRemoval(sampleName) {
             var
