@@ -1,0 +1,8 @@
+.chart .colour {
+    border-left: 30px solid #ececec;
+    border-right: 30px solid #ececec;
+    display: inline-block;
+    height: 10px;
+    margin-right: 5px;
+    width: 120px;
+}
