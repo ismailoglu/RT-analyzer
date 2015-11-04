@@ -22,10 +22,7 @@
             var
                 vm;
             vm = this;
-            vm.add = experiment.metadata.biologicalReplicatesGroups.add;
-            vm.data = experiment.data;
-            vm.metadata = experiment.metadata;
-            vm.remove = experiment.metadata.biologicalReplicatesGroups.remove;
+            vm.experiment = experiment;
             vm.onControlBiologicalReplicatesGroupChange = onControlBiologicalReplicatesGroupChange;
             vm.showChooseControlBiologicalReplicatesGroup = showChooseControlBiologicalReplicatesGroup;
             //

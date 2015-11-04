@@ -1,7 +1,7 @@
 <h3>Biological Replicates Groups</h3>
 <hr>
 <form
-    data-ng-submit="biologicalReplicatesGroups.add(biologicalReplicatesGroups.new)"
+    data-ng-submit="biologicalReplicatesGroups.experiment.metadata.biologicalReplicatesGroups.add(biologicalReplicatesGroups.new)"
     >
     <div
         class="
@@ -38,7 +38,7 @@
         <div
             class="checkbox"
             data-ng-if="!sampleMetadata.used"
-            data-ng-repeat="(sampleName, sampleMetadata) in biologicalReplicatesGroups.metadata.biologicalReplicatesGroups.samples"
+            data-ng-repeat="(sampleName, sampleMetadata) in biologicalReplicatesGroups.experiment.metadata.biologicalReplicatesGroups.samples"
             >
             <label>
                 <input
@@ -64,13 +64,13 @@
 <br>
 <ol>
     <li
-        data-ng-repeat="(biologicalReplicatesGroupName, biologicalReplicatesGroup) in biologicalReplicatesGroups.data.biologicalReplicatesGroups"
+        data-ng-repeat="(biologicalReplicatesGroupName, biologicalReplicatesGroup) in biologicalReplicatesGroups.experiment.data.biologicalReplicatesGroups"
         >
         <button
             class="
                 close
             "
-            data-ng-click="biologicalReplicatesGroups.remove(biologicalReplicatesGroupName)"
+            data-ng-click="biologicalReplicatesGroups.experiment.metadata.biologicalReplicatesGroups.remove(biologicalReplicatesGroupName)"
             type="button"
             >
             <span>
@@ -84,7 +84,20 @@
                 Close
             </span>
         </button>
-        <b>{{biologicalReplicatesGroupName}}</b>
+        <span
+            data-ng-click="biologicalReplicatesGroups.experiment.metadata.biologicalReplicatesGroups.change(biologicalReplicatesGroupName)"
+            >
+            <span
+                class="
+                    colour
+                "
+                style="
+                    background-color: {{biologicalReplicatesGroups.experiment.metadata.biologicalReplicatesGroups.colours[biologicalReplicatesGroupName]}}
+                "
+                >
+            </span>
+            <b>{{biologicalReplicatesGroupName}}</b>
+        </span>
         <ol>
             <li
                 data-ng-repeat="biologicalReplicate in biologicalReplicatesGroup"
@@ -114,8 +127,8 @@
                     form-control
                 "
                 data-ng-change="biologicalReplicatesGroups.onControlBiologicalReplicatesGroupChange()"
-                data-ng-model="biologicalReplicatesGroups.data.controlBiologicalReplicatesGroup"
-                data-ng-options="biologicalReplicatesGroupName as biologicalReplicatesGroupName for (biologicalReplicatesGroupName, biologicalReplicatesGroup) in biologicalReplicatesGroups.data.biologicalReplicatesGroups"
+                data-ng-model="biologicalReplicatesGroups.experiment.data.controlBiologicalReplicatesGroup"
+                data-ng-options="biologicalReplicatesGroupName as biologicalReplicatesGroupName for (biologicalReplicatesGroupName, biologicalReplicatesGroup) in biologicalReplicatesGroups.experiment.data.biologicalReplicatesGroups"
                 id="controlBiologicalReplicatesGroup"
                 >
                 <option
