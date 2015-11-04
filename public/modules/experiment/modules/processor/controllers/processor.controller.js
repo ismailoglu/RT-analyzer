@@ -43,7 +43,9 @@
             reload.metadata.samples.add = experiment.metadata.samples.add;
             reload.metadata.samples.change = experiment.metadata.samples.change;
             reload.metadata.samples.remove = experiment.metadata.samples.remove;
-            console.log
+            reload.metadata.biologicalReplicatesGroups.add = experiment.metadata.biologicalReplicatesGroups.add;
+            reload.metadata.biologicalReplicatesGroups.change = experiment.metadata.biologicalReplicatesGroups.change;
+            reload.metadata.biologicalReplicatesGroups.remove = experiment.metadata.biologicalReplicatesGroups.remove;
             experiment.data = reload.data;
             experiment.metadata = reload.metadata;
         }
