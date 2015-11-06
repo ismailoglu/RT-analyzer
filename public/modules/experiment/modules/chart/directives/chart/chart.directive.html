@@ -1,3 +1,226 @@
+<form>
+    <div
+        class="row"
+        >
+        <div
+            class="
+                col-md-4
+            "
+            >
+            <div
+                class="
+                    form-group
+                "
+                >
+                <label
+                    for="table"
+                    >
+                    Table
+                </label>
+                <select
+                    class="
+                        form-control
+                    "
+                    data-ng-disabled="!chart.experiment.metadata.processed"
+                    data-ng-model="chart.table"
+                    id="table"
+                    >
+                    <option
+                        value="2"
+                        >
+                        Relative Expression Values Normalized to Control Probe
+                    </option>
+                    <option
+                        value="3"
+                        >
+                        Biological Replicate Averages
+                    </option>
+                    <option
+                        value="4"
+                        >
+                        Data Normalized to Control Sample/Group
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div
+            class="
+                col-md-4
+            "
+            >
+            <div
+                class="
+                    form-group
+                "
+                >
+                <label
+                    for="relation"
+                    >
+                    Relation
+                </label>
+                <select
+                    class="
+                        form-control
+                    "
+                    data-ng-disabled="!chart.experiment.metadata.processed"
+                    data-ng-model="chart.relation"
+                    id="relation"
+                    >
+                    <option
+                        value="probesBySamples"
+                        >
+                        Probes by Samples
+                    </option>
+                    <option
+                        value="samplesByProbes"
+                        >
+                        Samples by Probes
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div
+            class="
+                col-md-4
+            "
+            >
+            <div
+                class="
+                    form-group
+                "
+                >
+                <label
+                    for="show"
+                    >
+                    Show
+                </label>
+                <select
+                    class="
+                        form-control
+                    "
+                    data-ng-disabled="!chart.experiment.metadata.processed"
+                    data-ng-model="chart.show"
+                    id="show"
+                    >
+                    <option
+                        value="Error"
+                        >
+                        Standard Error
+                    </option>
+                    <option
+                        value="Deviation"
+                        >
+                        Standard Deviation
+                    </option>
+                    <option
+                        value="no"
+                        >
+                        Do not show error bars
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+        <div
+            class="row"
+            >
+            <div
+                class="
+                    col-md-4
+                "
+                >
+                <div
+                    class="
+                        form-group
+                    "
+                    data-ng-if="chart.experiment.data.probeList.list.length > 0"
+                    >
+                    <label
+                        >
+                        Probes
+                    </label>
+                    <div
+                        class="
+                            checkbox
+                        "
+                        data-ng-repeat="probe in chart.experiment.data.probeList.list"
+                        >
+                        <label>
+                            <input
+                                data-ng-disabled="!chart.experiment.metadata.processed"
+                                data-ng-model="chart.experiment.data.probeList[probe].checked"
+                                type="checkbox"
+                                >
+                            <span
+                                class="
+                                    colour
+                                "
+                                style="
+                                    background-color: {{chart.experiment.data.probeList[probe].colour}}
+                                "
+                                >
+                            </span>
+                            {{probe}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="
+                    col-md-4
+                "
+                >
+                <div
+                    class="
+                        form-group
+                    "
+                    data-ng-if="chart.experiment.data.sampleList.list.length > 0"
+                    >
+                    <label
+                        >
+                        Samples
+                    </label>
+                    <div
+                        class="
+                            checkbox
+                        "
+                        data-ng-repeat="sample in chart.experiment.data.sampleList.list"
+                        >
+                        <label>
+                            <input
+                                data-ng-disabled="!chart.experiment.metadata.processed"
+                                data-ng-model="chart.experiment.data.sampleList[sample].checked"
+                                type="checkbox"
+                                >
+                            <span
+                                class="
+                                    colour
+                                "
+                                style="
+                                    background-color: {{chart.experiment.data.sampleList[sample].colour}}
+                                "
+                                >
+                            </span>
+                            {{sample}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button
+        class="
+            btn
+            btn-default
+        "
+        data-ng-click="chart.click()"
+        data-ng-disabled="!chart.experiment.metadata.processed"
+        >
+        Chart Data
+    </button>
+</form>
+<br>
+<br>
 <div
     style="width: 100%;"
     >
@@ -7,8 +230,3 @@
     >
     </canvas>
 </div>
-<button
-    data-ng-click="chart.click()"
-    >
-    Update
-</button>

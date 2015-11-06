@@ -55,6 +55,7 @@
                     coerceModel: coerceModel
                 },
                 missing: {},
+                processed: false,
                 probes: {
                     add: makeAddVariableFunction('probes'),
                     colours: [],

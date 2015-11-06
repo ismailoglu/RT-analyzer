@@ -157,8 +157,11 @@
             };
             experiment.metadata.missing = {};
             experiment.metadata.missingDone = false;
+            delete experiment.data.probeList;
+            delete experiment.data.sampleList;
         }
         function processData() {
+            experiment.metadata.processed = true;
             reset();
             if (!experiment.data.controlProbe) {
                 alert('NO_CONTROL_PROBE');

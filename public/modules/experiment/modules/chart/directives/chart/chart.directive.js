@@ -22,64 +22,57 @@
         /**
          * functions
          */
-        function  dummy(experiment) {
+        function controller(
+            experiment
+        ) {
             var
-                datasets,
-                labels,
-                rawData;
-            makeFinalProbeList(experiment);
-            makeFinalSampleList(experiment);
-            rawData = experiment.data.analysis['step 2'];
-            labels = Object.keys(rawData).filter(function (sample) {
-                return filterSamples(experiment, sample)
-            });
-            datasets = [];
-            var probesColours = [];
-            var probes = experiment.data.probes.filter(
-                function (probe, index) {
-                    // if (
-                    //     probe === experiment.data.controlProbe
-                    // ) {
-                    //     return false;
-                    // }
-                    if (
-                        !filterProbes(experiment, probe)
-                    ) {
-                        return false;
-                    }
-                    probesColours.push(experiment.metadata.probes.colours[index]);
-                    return true;
+                vm;
+            vm = this;
+            vm.experiment = experiment;
+            vm.relation = 'probesBySamples';
+            vm.show = 'Error';
+            vm.table = '2';
+            vm.click = function click() {
+                console.log(experiment);
+                vm.data = makeDataForChart(vm.experiment, vm.relation, vm.show, vm.table);
+                vm.chart = vm.makeChart(vm.data);
+            }
+        }
+        function link(
+            scope,
+            element,
+            attribute,
+            controller
+        ) {
+            var
+                context;
+            context = element.find('canvas')[0].getContext("2d");
+            controller.makeChart = makeChart;
+            controller.chartMade = null;
+            //
+            // functions
+            //
+            function makeChart(data) {
+                if (
+                    controller.chartMade !== null
+                ) {
+                    controller.chartMade.destroy();
                 }
-            );
-            probes.forEach(function (probe, index) {
-                var thisColour = probesColours[index];
-                var rgb = hexToRgb(thisColour);
-                datasets.push({
-                    label: probe,
-                    fillColor : "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.5)",
-                    strokeColor : "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.8)",
-                    highlightFill: "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",0.75)",
-                    highlightStroke: "rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + ",1)",
-                    data: []
+                controller.chartMade = new chartjs(context).Bar(data, {
+                    responsive: true
                 });
-            });
-            labels.forEach(function forEachSample(sample) {
-                probes.forEach(function forEachProbe(probe, index) {
-                    var
-                        value = 0;
-                    if (
-                        rawData[sample][probe]
-                    ) {
-                        value = rawData[sample][probe].relativeExpressionValue;
-                    }
-                    datasets[index].data.push(value || 0);
-                });
-            });
-            var data = {
-                labels: labels,
-                datasets: datasets
+            }
+        }
+        function coloursForDataset(hexColour) {
+            var
+                rgbColour;
+            rgbColour = hexToRgb(hexColour);
+            return {
+                fillColor : "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 0.5)",
+                strokeColor : "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 0.8)",
+                highlightFill: "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 0.75)",
+                highlightStroke: "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 1)"
             };
-            return data;
         }
         function filterSamples(experiment, sample) {
             if (
@@ -100,6 +93,82 @@
                 return true;
             }
             return false;
+        }
+        function hexToRgb(hex) {
+            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                return r + r + g + g + b + b;
+            });
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        function newDataset(experiment, label) {
+            var
+                datasetColours;
+            datasetColours = coloursForDataset(experiment.data.probeList[label].colour);
+            return {
+                label: label,
+                fillColor: datasetColours.fillColor,
+                strokeColor: datasetColours.strokeColor,
+                highlightFill: datasetColours.highlightFill,
+                highlightStroke: datasetColours.highlightStroke,
+                data: [],
+                error: []
+            };
+        }
+        function makeDataForChart(
+            experiment,
+            relation,
+            show,
+            table
+        ) {
+            var
+                datasets,
+                labels,
+                probes,
+                rawData;
+            makeFinalProbeList(experiment);
+            makeFinalSampleList(experiment);
+            rawData = experiment.data.analysis['step ' + table];
+            datasets = [];
+            labels = Object.keys(rawData).filter(function (sample) {
+                return filterSamples(experiment, sample)
+            });
+            probes = experiment.data.probes.filter(function (probe) {
+                return filterProbes(experiment, probe);
+            });
+            probes.forEach(function (probe) {
+                datasets.push(newDataset(experiment, probe));
+            });
+            labels.forEach(function forEachSample(sample) {
+                probes.forEach(function forEachProbe(probe, index) {
+                    var
+                        barValue,
+                        errorBarValue;
+                    if (
+                        rawData[sample][probe]
+                    ) {
+                        barValue = rawData[sample][probe].relativeExpressionValue;
+                        if (
+                            rawData[sample][probe]['standard' + show]
+                        ) {
+                            errorBarValue = rawData[sample][probe]['standard' + show];
+                        }
+                    }
+                    datasets[index].data.push(barValue || 0);
+                    datasets[index].error.push(errorBarValue || 0);
+                });
+            });
+            var data = {
+                labels: labels,
+                datasets: datasets
+            };
+            return data;
         }
         function makeFinalProbeList(experiment) {
             if (
@@ -132,68 +201,20 @@
             });
             experiment.data.samples.forEach(function forEachSample(sample, index) {
                 if (
-                    experiment.metadata.biologicalReplicatesGroups.biologicalReplicates
-                ) {
-                    if (
+                    !experiment.metadata.biologicalReplicatesGroups.biologicalReplicates
+                    ||
+                    (
+                        experiment.metadata.biologicalReplicatesGroups.biologicalReplicates
+                        &&
                         experiment.metadata.biologicalReplicatesGroups.biologicalReplicates.indexOf(sample) === -1
-                    ) {
-                        experiment.data.sampleList[sample] = {};
-                        experiment.data.sampleList[sample].colour = experiment.metadata.samples.colours[index];
-                        experiment.data.sampleList[sample].checked = true;
-                        experiment.data.sampleList.list.push(sample);
-                    }
-                } else {
+                    )
+                ) {
                     experiment.data.sampleList[sample] = {};
                     experiment.data.sampleList[sample].colour = experiment.metadata.samples.colours[index];
                     experiment.data.sampleList[sample].checked = true;
                     experiment.data.sampleList.list.push(sample);
                 }
             });
-        }
-        function hexToRgb(hex) {
-            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-            hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-                return r + r + g + g + b + b;
-            });
-            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? {
-                r: parseInt(result[1], 16),
-                g: parseInt(result[2], 16),
-                b: parseInt(result[3], 16)
-            } : null;
-        }
-        function controller(
-            experiment
-        ) {
-            var
-                vm;
-            vm = this;
-            vm.experiment = experiment;
-            vm.click = function click() {
-                console.log(experiment);
-                vm.data = dummy(experiment);
-                vm.chart = vm.makeChart(vm.data);
-            }
-        }
-        function link(
-            scope,
-            element,
-            attribute,
-            controller
-        ) {
-            var
-                context;
-            context = element.find('canvas')[0].getContext("2d");
-            controller.makeChart = makeChart;
-            //
-            // functions
-            //
-            function makeChart(data) {
-                return new chartjs(context).Bar(data, {
-                    responsive: true
-                });
-            }
         }
     }
 }());
