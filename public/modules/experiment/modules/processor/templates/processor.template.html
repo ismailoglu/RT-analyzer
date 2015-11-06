@@ -15,37 +15,6 @@
     </button>
     <br>
     <br>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="input-group">
-          <span class="input-group-btn">
-            <button
-                class="btn btn-default"
-                data-ng-click="processor.gen()"
-                type="button"
-                >
-                Generate
-            </button>
-          </span>
-          <input
-            class="form-control"
-            data-ng-model="processor.allData"
-            type="text"
-            >
-          <span class="input-group-btn">
-            <button
-                class="btn btn-default"
-                data-ng-click="processor.load()"
-                type="button"
-                >
-                Load
-            </button>
-          </span>
-        </div>
-      </div>
-    </div>
-    <br>
-    <br>
     <div
         data-ng-if="processor.experiment.metadata.missingDone"
         data-pcr-missing

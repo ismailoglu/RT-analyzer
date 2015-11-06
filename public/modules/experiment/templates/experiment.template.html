@@ -19,7 +19,9 @@
         </div>
     </div>
 </div>
-<div>
+<div
+    data-ng-controller="Experiment as experiment"
+    >
     <h1>Experiment</h1>
     <hr>
     <div
@@ -87,7 +89,9 @@
             <div
                 class="well"
                 >
-                <strong>Samples Sets for Tests</strong><br>
+                <strong>Samples Sets for Tests</strong>
+                <br>
+                <br>
                 <a href="data/demo.csv" target="_blank">demo.csv</a><br>
                 <a href="data/demoNoVariables.csv" target="_blank">demoNoVariables.csv</a><br>
                 <a href="data/sample1.csv" target="_blank">sample1.csv</a><br>
@@ -99,6 +103,47 @@
                 <a href="data/sampleSet3/sampleSet3file3.csv" target="_blank">sampleSet3file3.csv</a><br>
                 <a href="data/sampleSet3/sampleSet3file4.csv" target="_blank">sampleSet3file4.csv</a><br>
                 <a href="data/sampleSet3.raw.txt" target="_blank">sampleSet3.raw.txt</a>
+                <br>
+                <br>
+                <div
+                    class="row"
+                    >
+                    <div
+                        class="col-md-12"
+                        >
+                        <div
+                            class="input-group"
+                            >
+                            <span
+                                class="input-group-btn"
+                                >
+                                <button
+                                    class="btn btn-default"
+                                    data-ng-click="experiment.gen()"
+                                    type="button"
+                                    >
+                                    Generate
+                                </button>
+                            </span>
+                            <input
+                                class="form-control"
+                                data-ng-model="experiment.allData"
+                                type="text"
+                                >
+                            <span
+                                class="input-group-btn"
+                                >
+                                <button
+                                    class="btn btn-default"
+                                    data-ng-click="experiment.load()"
+                                    type="button"
+                                    >
+                                    Load
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
