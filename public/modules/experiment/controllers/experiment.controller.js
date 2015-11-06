@@ -12,7 +12,6 @@
         var
             vm;
         vm = this;
-        console.log('new controller')
         experiment.raw = JSON.stringify(
             experiment,
             function replacer(key, value) {
