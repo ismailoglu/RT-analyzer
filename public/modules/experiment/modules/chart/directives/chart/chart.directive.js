@@ -193,6 +193,15 @@
             }
             experiment.data.sampleList = {};
             experiment.data.sampleList.list = [];
+            if (experiment.data.controlSample) {
+              experiment.data.samples.forEach(function forEachSample(sample, index) {
+                experiment.data.sampleList[sample] = {};
+                experiment.data.sampleList[sample].colour = experiment.metadata.samples.colours[index];
+                experiment.data.sampleList[sample].checked = true;
+                experiment.data.sampleList.list.push(sample);
+              });
+              return;
+            }
             Object.keys(experiment.data.biologicalReplicatesGroups).forEach(function forEachBiologicalReplicatesGroupName(biologicalReplicateGroupName) {
                 experiment.data.sampleList[biologicalReplicateGroupName] = {};
                 experiment.data.sampleList[biologicalReplicateGroupName].colour = experiment.metadata.biologicalReplicatesGroups.colours[biologicalReplicateGroupName];
