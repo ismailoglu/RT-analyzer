@@ -46,7 +46,7 @@
         ) {
             var
                 context;
-            context = element.find('canvas')[0].getContext("2d");
+            context = element.find('canvas')[0].getContext('2d');
             controller.makeChart = makeChart;
             controller.chartMade = null;
             //
@@ -68,10 +68,10 @@
                 rgbColour;
             rgbColour = hexToRgb(hexColour);
             return {
-                fillColor : "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 0.5)",
-                strokeColor : "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 0.8)",
-                highlightFill: "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 0.75)",
-                highlightStroke: "rgba(" + rgbColour.r + ", " + rgbColour.g + ", " + rgbColour.b + ", 1)"
+                fillColor : 'rgba(' + rgbColour.r + ', ' + rgbColour.g + ', ' + rgbColour.b + ', 0.5)',
+                strokeColor : 'rgba(' + rgbColour.r + ', ' + rgbColour.g + ', ' + rgbColour.b + ', 0.8)',
+                highlightFill: 'rgba(' + rgbColour.r + ', ' + rgbColour.g + ', ' + rgbColour.b + ', 0.75)',
+                highlightStroke: 'rgba(' + rgbColour.r + ', ' + rgbColour.g + ', ' + rgbColour.b + ', 1)'
             };
         }
         function filterSamples(experiment, sample) {
@@ -95,22 +95,27 @@
             return false;
         }
         function hexToRgb(hex) {
-            // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-            var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+            // Expand shorthand form (e.g. '03F') to full form (e.g. '0033FF')
+            var result,
+            shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
             hex = hex.replace(shorthandRegex, function(m, r, g, b) {
                 return r + r + g + g + b + b;
             });
-            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             return result ? {
                 r: parseInt(result[1], 16),
                 g: parseInt(result[2], 16),
                 b: parseInt(result[3], 16)
             } : null;
         }
-        function newDataset(experiment, label) {
+        function newDataset(experiment, label, relation) {
             var
                 datasetColours;
-            datasetColours = coloursForDataset(experiment.data.probeList[label].colour);
+            if (relation === 'samplesByProbes') {
+                datasetColours = coloursForDataset(experiment.data.sampleList[label].colour);
+            } else {
+                datasetColours = coloursForDataset(experiment.data.probeList[label].colour);
+            }
             return {
                 label: label,
                 fillColor: datasetColours.fillColor,
@@ -128,14 +133,51 @@
             table
         ) {
             var
+                data,
                 datasets,
                 labels,
                 probes,
-                rawData;
+                rawData,
+                samples;
             makeFinalProbeList(experiment);
             makeFinalSampleList(experiment);
             rawData = experiment.data.analysis['step ' + table];
             datasets = [];
+            if (relation === 'samplesByProbes') {
+                samples = Object.keys(rawData).filter(function (sample) {
+                    return filterSamples(experiment, sample)
+                });
+                probes = experiment.data.probes.filter(function (probe) {
+                    return filterProbes(experiment, probe);
+                });
+                samples.forEach(function (sample) {
+                    datasets.push(newDataset(experiment, sample, relation));
+                });
+                probes.forEach(function forEachSample(probe) {
+                    samples.forEach(function forEachProbe(sample, index) {
+                        var
+                        barValue,
+                        errorBarValue;
+                        if (
+                            rawData[sample][probe]
+                        ) {
+                            barValue = rawData[sample][probe].relativeExpressionValue;
+                            if (
+                                rawData[sample][probe]['standard' + show]
+                            ) {
+                                errorBarValue = rawData[sample][probe]['standard' + show];
+                            }
+                        }
+                        datasets[index].data.push(barValue || 0);
+                        datasets[index].error.push(errorBarValue || 0);
+                    });
+                });
+                data = {
+                    labels: probes,
+                    datasets: datasets
+                };
+                return data;
+            }
             labels = Object.keys(rawData).filter(function (sample) {
                 return filterSamples(experiment, sample)
             });
@@ -164,7 +206,7 @@
                     datasets[index].error.push(errorBarValue || 0);
                 });
             });
-            var data = {
+            data = {
                 labels: labels,
                 datasets: datasets
             };
