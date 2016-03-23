@@ -376,6 +376,17 @@
                 Object.keys(experiment.data.analysis['step 4'][sampleOrBiologicalReplicatesGroup]).forEach(function forEachValue(probe) {
                     if (
                         experiment.data.analysis['step 2'][control][probe]
+                        // sometimes we get an empty object
+                        // so we need to see if there is a relativeExpressionValue too
+                        // otherwise the data will remain the copy of step 2 for thiese situations
+                        // the following condition resolves this issue (issue 7 on the repository)
+                        // hopefully a rewrite will simplify things considerably on a potential v2.0
+                        &&
+                        experiment.data.analysis['step 2'][control][probe].relativeExpressionValue
+                        // MORE:
+                        // using the default example, removing the bioreps, selecting Day0-NT-1
+                        // as all the GLOBIN cycle values are missing we end up with an empty object
+                        // it does not happen with NKX because only one of three values is missing
                     ) {
                         if (
                             experiment.data.analysis['step 2'][control][probe].relativeExpressionValue
